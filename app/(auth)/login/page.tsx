@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { ReactElement } from "react";
 
 const Login = () => {
   return (
@@ -12,9 +12,7 @@ const Login = () => {
         className=" w-24 h-24 object-cover mx-auto"
       />
       <div className=" max-w-[25rem] mx-auto shadow-lg border-2 px-10 py-5 ]">
-        <h1 className="text-center font-normal text-2xl lg:text-3xl my-3">
-          Login
-        </h1>
+        <h1 className="text-center font-normal text-2xl lg:text-3xl my-3">Login</h1>
         <form>
           <label className="block py-[2px]" htmlFor="firstName">
             Email Address or Phone Number
@@ -47,3 +45,7 @@ const Login = () => {
 };
 
 export default Login;
+
+Login.getLayout = function getLayout(page: ReactElement) {
+  return <>{page}</>;
+};

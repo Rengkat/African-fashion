@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { GrClose, BsSearch, HiMenu } from "react-icons/all";
+import { GrClose, BsSearch, HiMenu, IoLogoWechat, BsCart4 } from "react-icons/all";
 
 import Link from "next/link";
 const MobileNav = () => {
@@ -13,19 +13,25 @@ const MobileNav = () => {
         <div className="flex justify-between items-center pl-0 pr-10">
           <header className="">
             <Link href={"/"}></Link>
-            <Image src="/logo.svg" width={100} height={100} alt="logo" />
+            <Image src="/logo.svg" width={100} height={100} alt="logo" className="" />
           </header>
-          <div className="flex items-center gap-5">
-            <Image src="/account 2.svg" width={50} height={50} alt="account" />
+          <div className="flex items-center gap-3 md:gap-5">
+            <Image
+              src="/account 2.svg"
+              width={50}
+              height={50}
+              alt="account"
+              className="h-[2rem] w-[2rem]"
+            />
             <div className="relative">
-              <Image src="/chatting.svg" width={50} height={50} alt="account" />
-              <p className="absolute w-5 h-5 p-3 bg-blue-300 text-red-500 font-semibold rounded-full -top-1 right-2 flex justify-center items-center">
+              <IoLogoWechat className="text-blue-400 text-3xl" />
+              <p className="absolute w-3 h-3 p-2 md:p-3 bg-blue-300 text-red-500 text-xs md:text-[16px] font-semibold rounded-full -top-1 md:-top-3 right-0 md:right-0 flex justify-center items-center">
                 12
               </p>
             </div>
             <div className="relative">
-              <Image src="/cart.svg" width={52} height={52} alt="account" />
-              <p className="absolute w-5 h-5 p-3 bg-blue-300 text-red-500 font-semibold rounded-full -z-10 -top-1 right-2 flex justify-center items-center">
+              <BsCart4 className="text-blue-400 text-3xl" />
+              <p className="absolute -z-10 w-3 h-3 p-2 md:p-3 bg-blue-300 text-red-500 text-xs md:text-[16px] font-semibold rounded-full -top-1 md:-top-3 right-1 md:right-0 flex justify-center items-center">
                 12
               </p>
             </div>
@@ -44,19 +50,13 @@ const MobileNav = () => {
           <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/"}>
             HOME
           </Link>
-          <Link
-            className="block p-3 hover:bg-slate-500 rounded-md"
-            href={"/shop"}>
+          <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/shop"}>
             SHOP
           </Link>
-          <Link
-            className="block p-3 hover:bg-slate-500 rounded-md"
-            href={"/stylists"}>
+          <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/stylists"}>
             STYLIST
           </Link>
-          <Link
-            className="block p-3 hover:bg-slate-500 rounded-md"
-            href={"/contact"}>
+          <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/contact"}>
             CONTACT
           </Link>
         </div>

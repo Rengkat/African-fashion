@@ -1,17 +1,16 @@
 import React from "react";
 import SubHero from "./SubHero";
 import Image from "next/image";
+import Slider from "./Slider";
 
 const Hero = () => {
   return (
     <div className="xl:h-[90vh] flex flex-col gap-2 sm:grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-y-5 sm:gap-4 mt-4">
-      <div className="bg-red-300 h-[80vh] xl:h-auto col-span-2 row-span-2"></div>
+      <div className="bg-red-300 h-[80vh] xl:h-auto col-span-2 row-span-2">
+        <Slider />
+      </div>
       <div className="bg-green-300 h-[40vh] xl:h-[45vh] relative overflow-hidden">
-        <SubHero
-          heading="Men's Native"
-          subHeading="African wears"
-          link="/men-native"
-        />
+        <SubHero heading="Men's Native" subHeading="African wears" link="/men-native" />
         <Image
           src="/men-native.png"
           width={500}
@@ -21,11 +20,7 @@ const Hero = () => {
         />
       </div>
       <div className="bg-blue-300 h-[40vh] xl:h-[45vh] relative overflow-hidden">
-        <SubHero
-          heading="Men's Cooperate"
-          subHeading="Made in Nigeria"
-          link="/men-cooperate"
-        />
+        <SubHero heading="Men's Cooperate" subHeading="Made in Nigeria" link="/men-cooperate" />
         <Image
           src="/men-cooperate.png"
           width={500}
@@ -35,11 +30,7 @@ const Hero = () => {
         />
       </div>
       <div className="bg-yellow-300 h-[40vh] xl:h-[45vh] relative overflow-hidden">
-        <SubHero
-          heading="Women's Native"
-          subHeading="African wears"
-          link="/women-native"
-        />
+        <SubHero heading="Women's Native" subHeading="African wears" link="/women-native" />
         <Image
           src="/women-native2.png"
           width={500}
@@ -49,11 +40,7 @@ const Hero = () => {
         />
       </div>
       <div className="bg-purple-300 h-[40vh] xl:h-[45vh] relative overflow-hidden">
-        <SubHero
-          heading="Women's Cooperate"
-          subHeading="Made around you"
-          link="/women-cooperate"
-        />
+        <SubHero heading="Women's Cooperate" subHeading="Made around you" link="/women-cooperate" />
         <Image
           src="/women-cooperate.png"
           width={500}

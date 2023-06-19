@@ -1,6 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .edit-input {
+    @apply py-[5px] px-3 w-full border-[2px] border-[#eaeaea] outline-1 outline-blue-400;
+  }
+}
 body {
   background-color: #f4f7f6;
 }
