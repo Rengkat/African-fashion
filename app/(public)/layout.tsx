@@ -25,10 +25,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
             <Footer />
           </div>
-          <div className="fixed inset-0 z-40 lg:hidden bg-[#000000b8] backdrop-blur-[1px]">
+          <div className="fixed inset-0 z-40 lg: hidden bg-[#000000b8] backdrop-blur-[1px]">
             <MobileNav />
           </div>
-          <div className="fixed bottom-5 z-[30] right-5">
+          <div className="fixed bottom-2 z-[30] right-5">
             <p className="border-[1px] border-blue-400 p-2 rounded-lg text-blue-500 bg-white">
               May I help you?
             </p>
