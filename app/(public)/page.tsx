@@ -2,21 +2,29 @@ import Image from "next/image";
 import Hero from "../../components/Hero";
 import Display from "../../components/Display";
 import { customerSport } from "@/public/constants";
+import { getCategoryProducts } from "@/lib/data";
 const men = [2, 4, 6, 71, 3, 77, 8, 9];
-export default function Home() {
+export default async function Home() {
+  const ladiesCooperate = await getCategoryProducts("ladies-cooperate-wears");
+  const ladiesNative = await getCategoryProducts("ladies-native-wears");
+  const allLadies = [...ladiesCooperate, ...ladiesNative];
+  const menCooperate = await getCategoryProducts("men-cooperate-wears");
+  const menNative = await getCategoryProducts("men-native-wears");
+  const allMen = [...menCooperate, ...menNative];
+
   return (
     <>
       {/* hero */}
       <Hero />
       <main className="my-[2rem] lg:my-[5rem]">
         <div className=" w-[95%] md:w-[95%] xl:w-[80%] mx-auto">
-          <h1 className="text-3xl lg:text-[3rem] font-light">Women Wears</h1>
+          <h1 className="text-3xl lg:text-[3rem] font-light">Ladies Wears</h1>
           <div className="w-32 h-[2px] lg:h-[5px] bg-blue-300 lg:mt-2"></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 mx-2 lg:mx-0 md:grid-cols-3 lg:grid-cols-4 gap-5 my-5 lg:my-8">
-            {men.map((product) => {
+            {allLadies.slice(0, 8).map((product) => {
               return (
                 <>
-                  <Display key={product} />
+                  <Display key={product._id} product={product} />
                 </>
               );
             })}
@@ -61,10 +69,10 @@ export default function Home() {
           <h1 className="text-3xl lg:text-[3rem] font-light">Men Wears</h1>
           <div className="w-32 h-[2px] lg:h-[5px] bg-blue-300 lg:mt-2"></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-5 lg:my-8">
-            {men?.slice(0, 4)?.map((product) => {
+            {allMen?.slice(0, 4)?.map((product) => {
               return (
                 <>
-                  <Display key={product} />
+                  <Display key={product} product={product} />
                 </>
               );
             })}

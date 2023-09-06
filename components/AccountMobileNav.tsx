@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { CiUser, BsBoxSeam, BsHeart, GrDeliver, ImMenu } from "react-icons/all";
-
+import { GrDeliver } from "react-icons/gr";
+import { CiUser, CiDeliveryTruck } from "react-icons/ci";
+import { BsBoxSeam, BsHeart } from "react-icons/bs";
+import { ImMenu } from "react-icons/im";
 const AccountMobileNav = () => {
   return (
-    <nav className="lg:hidden list-none w-full h-[55vh] bg-[#fff] border-r-[1px] border-[#eaeaea] shadow-md rounded-lg">
+    <nav className="md:hidden list-none w-full h-[55vh] bg-[#fff] border-r-[1px] border-[#eaeaea] shadow-md rounded-lg">
       <li className="flex items-center gap-3 p-5 font-semibold hover:bg-[#ddd9d9] hover:rounded-t-md">
         <CiUser fontSize={20} />
         <Link href={"/account"}>My Account</Link>

@@ -1,16 +1,34 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  MdStar,
-  IoLogoWechat,
-  FaTwitter,
-  FaFacebookSquare,
-  BsInstagram,
-  BsTelephoneFill,
-  BsPinterest,
-} from "react-icons/all";
+import { BsInstagram, BsTelephoneFill, BsPinterest } from "react-icons/bs";
+import { FaTwitter, FaFacebookSquare } from "react-icons/fa";
+import { MdStar } from "react-icons/md";
+import { IoLogoWechat } from "react-icons/io5";
+import appwriteServices from "@/lib/appwrite";
+interface Props {
+  params: { stylistId: string };
+}
+interface Stylist {
+  company: string;
+  phone: string;
+  website: string;
+  companyDescription: string;
+  companyAddress: string;
+  state: string;
+  twitter: string;
+  pintrest: string;
+  email: string;
+  facebook: string;
+  instagram: string;
+  firstName: string;
+  surname: string;
+  $id: string;
+  $createdAt: string;
+}
+const seller = async ({ params }: Props) => {
+  const id = params.stylistId;
+  const stylist: any = await appwriteServices.getSingleStylist(id);
 
-const seller = () => {
   return (
     <div className="my-10">
       <div className="w-[95%] lg:w-[80%] mx-auto lg:h-[60vh] md:h-[80vh]  flex flex-col lg:flex-row ">
@@ -26,14 +44,16 @@ const seller = () => {
               />
             </div>
             <div className="w-full lg:w-[80%]">
-              <h1 className="text-3xl font-bold my-3">Chinex Fashion</h1>
+              <h1 className="text-3xl font-bold my-3 capitalize">{stylist?.company}</h1>
               <p className="mb-[1rem]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem ut
-                aspernatur doloremque minima soluta quis quam magni ab molestias, reiciendis
-                eligendi enim.
+                {stylist.companyDescription ? (
+                  stylist?.companyDescription
+                ) : (
+                  <>No company Description</>
+                )}
               </p>
               <Link className=" text-blue-600" href={""}>
-                www.chinexfashion.com
+                {stylist.website ? stylist?.website : <>No official website yet</>}
               </Link>
             </div>
           </div>
@@ -48,9 +68,9 @@ const seller = () => {
                 <p>Rating</p>
               </div>
               <div className="w-[70%]">
-                <p>Ahmandu Bello way Jos</p>
-                <p>Plateau State</p>
-                <p>Lagos, Abuja, Kano, Kaduna, Enugu</p>
+                <p>{stylist?.companyAddress ? stylist?.companyAddress : <>Yet to address</>}</p>
+                <p>{stylist?.state ? stylist?.state : <>Stylist is yet to add state</>}</p>
+                <p>{stylist?.state ? stylist?.state : <>No branch added</>}</p>
                 <p>28</p>
                 <div className="flex gap-2 items-center text-yellow-500">
                   <MdStar />
@@ -64,17 +84,27 @@ const seller = () => {
         </aside>
         <aside className="w-full lg:w-[30%]">
           <div className="bg-[#fff] my-5 lg:my-0 lg:mx-5 rounded-lg shadow-lg border-[#eaeaea] p-[2rem]">
-            <button className="flex items-center justify-center gap-3 text-center w-full rounded-md bg-blue-500 shadow font-semibold text-white py-2 px-4">
-              <IoLogoWechat fontSize={25} /> <span>Chat Stylist</span>
-            </button>
+            <Link href={"/chats"}>
+              <button className="flex items-center justify-center gap-3 text-center w-full rounded-md bg-blue-500 shadow font-semibold text-white py-2 px-4">
+                <IoLogoWechat fontSize={25} /> <span>Chat Stylist</span>
+              </button>
+            </Link>
             <button className="flex items-center justify-center gap-3 text-center w-full rounded-md bg-blue-500 shadow font-semibold text-white py-2 px-4 my-3">
-              <BsTelephoneFill /> <span>+2348056874434</span>
+              <BsTelephoneFill /> <span>{stylist?.phone}</span>
             </button>
             <div className="flex justify-between my-3">
-              <FaTwitter fontSize={25} className="text-blue-400" />
-              <FaFacebookSquare fontSize={25} className="text-blue-800" />
-              <BsInstagram fontSize={25} className="text-pink-600" />
-              <BsPinterest fontSize={25} className="text-red-600" />
+              <a href={stylist?.twitter}>
+                <FaTwitter fontSize={25} className="text-blue-400" />
+              </a>
+              <a href={stylist.facebook}>
+                <FaFacebookSquare fontSize={25} className="text-blue-800" />
+              </a>
+              <a href={stylist.instagram}>
+                <BsInstagram fontSize={25} className="text-pink-600" />
+              </a>
+              <a href={stylist.pintrest}>
+                <BsPinterest fontSize={25} className="text-red-600" />
+              </a>
             </div>
           </div>
         </aside>
