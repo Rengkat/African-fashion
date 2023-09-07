@@ -18,6 +18,8 @@ export const stylistCollectionId = process.env.NEXT_PUBLIC_APPWRITE_STYLIST_COLL
 export const cartCollectionId = process.env.NEXT_PUBLIC_APPWRITE_CART_COLLECTION_ID!;
 export const orderCollectionId = process.env.NEXT_PUBLIC_APPWRITE_ORDER_COLLECTION_ID!;
 export const wishlistCollectionId = process.env.NEXT_PUBLIC_APPWRITE_WISHLIST_COLLECTION_ID!;
+export const userChatCollectionId = process.env.NEXT_PUBLIC_APPWRITE_USER_CHAT_COLLECTION_ID!;
+export const chatsCollectionId = process.env.NEXT_PUBLIC_APPWRITE_CHATS_COLLECTION_ID!;
 export const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOIN;
 
 const appwriteConfig = {

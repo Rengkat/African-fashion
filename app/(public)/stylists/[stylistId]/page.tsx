@@ -5,8 +5,10 @@ import { FaTwitter, FaFacebookSquare } from "react-icons/fa";
 import { MdStar } from "react-icons/md";
 import { IoLogoWechat } from "react-icons/io5";
 import appwriteServices from "@/lib/appwrite";
+import ChatBtn from "./chatBtn";
 interface Props {
   params: { stylistId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 interface Stylist {
   company: string;
@@ -25,10 +27,10 @@ interface Stylist {
   $id: string;
   $createdAt: string;
 }
-const seller = async ({ params }: Props) => {
+const seller = async ({ params, searchParams }: Props) => {
   const id = params.stylistId;
   const stylist: any = await appwriteServices.getSingleStylist(id);
-
+  // console.log(searchParams);
   return (
     <div className="my-10">
       <div className="w-[95%] lg:w-[80%] mx-auto lg:h-[60vh] md:h-[80vh]  flex flex-col lg:flex-row ">
@@ -84,11 +86,7 @@ const seller = async ({ params }: Props) => {
         </aside>
         <aside className="w-full lg:w-[30%]">
           <div className="bg-[#fff] my-5 lg:my-0 lg:mx-5 rounded-lg shadow-lg border-[#eaeaea] p-[2rem]">
-            <Link href={"/chats"}>
-              <button className="flex items-center justify-center gap-3 text-center w-full rounded-md bg-blue-500 shadow font-semibold text-white py-2 px-4">
-                <IoLogoWechat fontSize={25} /> <span>Chat Stylist</span>
-              </button>
-            </Link>
+            <ChatBtn stylist={stylist} />
             <button className="flex items-center justify-center gap-3 text-center w-full rounded-md bg-blue-500 shadow font-semibold text-white py-2 px-4 my-3">
               <BsTelephoneFill /> <span>{stylist?.phone}</span>
             </button>

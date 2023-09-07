@@ -4,6 +4,8 @@ import appwriteConfig, {
   cartCollectionId,
   wishlistCollectionId,
   stylistCollectionId,
+  userChatCollectionId,
+  chatsCollectionId,
 } from "./config";
 import { Client, Account, ID, Databases, Query } from "appwrite";
 
@@ -340,6 +342,28 @@ export class AppWriteService {
       console.error("Error checking product in cart:", error);
       return false;
     }
+  }
+  // messages
+  async createUserChats(payload: any) {
+    try {
+      await db.createDocument(databaseId, userChatCollectionId, ID.unique(), payload);
+    } catch (error) {}
+  }
+  async createChats(combinedId: string) {
+    try {
+      await db.createDocument(databaseId, chatsCollectionId, ID.unique(), combinedId);
+    } catch (error) {}
+  }
+  async getUserChats(combinedId: string) {
+    const query = [Query.equal("combinedId", combinedId)];
+    try {
+      await db.listDocuments(databaseId, userChatCollectionId, query);
+    } catch (error) {}
+  }
+  async getChats(combinedId: string) {
+    try {
+      await db.getDocument(databaseId, chatsCollectionId, combinedId);
+    } catch (error) {}
   }
 }
 const appwriteServices = new AppWriteService();

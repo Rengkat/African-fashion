@@ -1,7 +1,11 @@
+"use client";
 import Image from "next/image";
 import { BsSendFill } from "react-icons/bs";
+import { useState } from "react";
 
 const ChartFiled = () => {
+  const [message, setMessage] = useState("");
+  const handleSubmit = () => {};
   return (
     <div className="relative h-full">
       <div className="flex items-end gap-2 border-b-[1px] border-[#eaeaea] p-5">
@@ -21,10 +25,14 @@ const ChartFiled = () => {
         </div>
       </div>
       <div className="w-[90%] absolute bottom-5 left-0 right-0 mx-auto flex border-[1px] bg-[#c1bfbf] border-[#999] rounded-r-md">
-        <aside className="w-[5rem] flex items-center justify-center">
+        <aside
+          className="w-[5rem] flex items-center justify-center cursor-pointer"
+          onClick={handleSubmit}>
           <BsSendFill fontSize={20} />
         </aside>
         <input
+          onChange={(e) => setMessage(e.target.value)}
+          value={message}
           placeholder="Enter message here..."
           type="text"
           className="w-full border-none outline-none p-2 rounded-r-md"
