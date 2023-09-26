@@ -14,6 +14,7 @@ interface Cart {
   stylist: string;
   productId: string;
   quantity: number;
+  $id: string;
 }
 interface Props {
   product: Cart;
@@ -23,50 +24,52 @@ const CartItem = ({ product }: Props) => {
 
   const handleRemove = async () => {
     try {
-      if (product?.userId === user?.$id) {
-        await appwriteServices.removeProduct({ productId: product.productId });
-      }
+      await appwriteServices.removeProduct(product?.$id);
     } catch (error) {}
     // console.log("first");
   };
   const hanleMoveToWishlist = async () => {
-    if (product?.userId === user?.$id) {
-      await appwriteServices.removeProduct({ productId: product.productId });
-      await appwriteServices.createWishlist({
-        userId: user?.$id,
-        productName: product?.productName,
-        maxPrice: product?.maxPrice,
-        minPrice: product?.minPrice,
-        imageURL: product?.imageURL,
-        stylist: product?.stylist,
-        productId: product?.productId,
-      });
-    }
+    await appwriteServices.removeProduct(product?.$id);
+    await appwriteServices.createWishlist({
+      userId: user?.$id,
+      productName: product?.productName,
+      maxPrice: product?.maxPrice,
+      minPrice: product?.minPrice,
+      imageURL: product?.imageURL,
+      stylist: product?.stylist,
+      productId: product?.productId,
+      uniqueId: product?.$id,
+    });
   };
   const handleIncrease = async () => {
     // check if product already in the cart. If in cart, increase quantity
-    const productInCart = await appwriteServices.isProductInCart(product.productId);
-    console.log(productInCart);
-    if (productInCart && productInCart?.userId === user?.$id) {
+    const productInCart = await appwriteServices.isProductInCart({
+      productId: product.productId,
+      userId: user?.$id,
+    });
+
+    if (productInCart) {
       const updatedQuantity = productInCart.quantity + 1;
 
       await appwriteServices.updateProductQty({
-        productId: product?.productId,
+        uniqueId: product?.$id,
         quantity: updatedQuantity,
       });
     }
   };
   const handleDecrease = async () => {
     // check if product qty is less than 1 then remove
-    const productInCart: any = await appwriteServices.isProductInCart(product.productId);
-    if (productInCart?.userId === user?.$id) {
-      if (productInCart?.quantity <= 1) {
-        await appwriteServices.removeProduct({ productId: product.productId });
-      }
-      const updatedQuantity = productInCart?.quantity - 1;
+    const productInCart: any = await appwriteServices.isProductInCart({
+      productId: product.productId,
+      userId: user?.$id,
+    });
 
+    if (productInCart?.quantity <= 1) {
+      await appwriteServices.removeProduct(product?.$id);
+    } else {
+      const updatedQuantity = productInCart?.quantity - 1;
       await appwriteServices.updateProductQty({
-        productId: product?.productId,
+        uniqueId: product?.$id,
         quantity: updatedQuantity,
       });
     }
@@ -74,7 +77,7 @@ const CartItem = ({ product }: Props) => {
   return (
     <>
       <div className=" w-full flex bg-[#fff] border-r-[1px] border-[#eaeaea] p-3 rounded-md my-3 shadow-md">
-        <div className="w-[20%] lg:w-[20%] h-[15vh] md:h-[25vh] lg:h-[30vh]">
+        <div className="w-[20%] lg:w-[20%] h-[15vh] md:h-[25vh] lg:h-[35vh]">
           <CartImage product={product} />
         </div>
         <aside className="w-[80%] flex flex-col justify-between">

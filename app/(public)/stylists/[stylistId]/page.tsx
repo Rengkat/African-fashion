@@ -84,7 +84,7 @@ const seller = async ({ params, searchParams }: Props) => {
             </div>
           </div>
         </aside>
-        <aside className="w-full lg:w-[30%]">
+        <aside className="w-full mb-[5rem] lg:mb-[0rem] lg:w-[30%]">
           <div className="bg-[#fff] my-5 lg:my-0 lg:mx-5 rounded-lg shadow-lg border-[#eaeaea] p-[2rem]">
             <ChatBtn stylist={stylist} />
             <button className="flex items-center justify-center gap-3 text-center w-full rounded-md bg-blue-500 shadow font-semibold text-white py-2 px-4 my-3">

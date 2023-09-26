@@ -25,7 +25,7 @@ interface Cart {
   productId: string;
   quantity: number;
 }
-export default function AddCartButton({ product }: Props) {
+export default function BuyNowButton({ product }: Props) {
   const router = useRouter();
 
   const { user, authStatus } = useSelector((store: any) => store.shop);
@@ -34,38 +34,25 @@ export default function AddCartButton({ product }: Props) {
     if (!authStatus) {
       router.replace("/login");
     }
-    // check if product already in the cart. If in cart, increase quantity
-    const productInCart = await appwriteServices.isProductInCart({
-      productId: product._id,
-      userId: user?.$id,
-    });
-    // console.log(productInCart);
-    if (productInCart) {
+    // check if product already in the checkout. If in cart, throw a message
+    const productInCart = await appwriteServices.isProductInCart(product._id);
+
+    if (productInCart && productInCart?.userId === user?.$id) {
       const updatedQuantity = productInCart.quantity + 1;
 
       await appwriteServices.updateProductQty({
         productId: product?._id,
         quantity: updatedQuantity,
-        uniqueId: productInCart?.$id,
-      });
-    } else {
-      await appwriteServices.addToCart({
-        userId: user?.$id,
-        imageURL: product?.image.asset._ref,
-        productName: product?.name,
-        minPrice: product?.minPrice,
-        maxPrice: product?.maxPrice,
-        stylist: product?.stylist,
-        productId: product?._id,
-        quantity: 1,
       });
     }
+    // await appwriteServices.
+    router.push("/account/checkout");
   };
 
   return (
     <>
       <button onClick={handleAddToCart} className="w-full bg-[#000] text-white py-2 px-3 my-2">
-        ADD TO BAG
+        BUY NOW
       </button>
     </>
   );

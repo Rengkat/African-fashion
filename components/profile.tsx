@@ -17,7 +17,7 @@ const Profile = () => {
 
   const hanleLogOut = () => {
     appwriteServices.logOut();
-    router.push("/");
+    router.replace("/");
   };
   return (
     <div

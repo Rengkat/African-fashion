@@ -8,6 +8,7 @@ const initialState = {
   isMobileProfileOpen: false,
   cartProducts: [],
   wishlist: [],
+  userChartWith: {},
 };
 
 const shopSlice = createSlice({
@@ -35,6 +36,10 @@ const shopSlice = createSlice({
     openMobileProfile(state) {
       state.isMobileProfileOpen = !state.isMobileProfileOpen;
     },
+    onChangeUserChat(state, action) {
+      console.log(state.userChartWith);
+      state.userChartWith = action.payload;
+    },
   },
 });
 
@@ -46,5 +51,6 @@ export const {
   openMobileProfile,
   getCart,
   getWishlist,
+  onChangeUserChat,
 } = shopSlice.actions; // Update the export here
 export default shopSlice.reducer;

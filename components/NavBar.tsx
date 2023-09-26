@@ -68,9 +68,13 @@ const NavBar = () => {
                 className="w-[4rem] h-[3rem] "
               />
               {authStatus && (
-                <p className="absolute w-5 h-5 p-3 bg-blue-300 text-red-500 font-semibold rounded-full -z-10 top-0 right-1 flex justify-center items-center">
-                  {cartProducts?.length}
-                </p>
+                <>
+                  {cartProducts?.length >= 1 && (
+                    <p className="absolute w-5 h-5 p-3 bg-blue-300 text-red-500 font-semibold rounded-full -z-10 top-0 right-1 flex justify-center items-center">
+                      {cartProducts?.length}
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </Link>

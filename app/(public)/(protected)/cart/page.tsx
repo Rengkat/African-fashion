@@ -3,7 +3,7 @@ import CartItem from "@/components/CartItem";
 import Image from "next/image";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import appwriteServices from "@/lib/appwrite";
 import Link from "next/link";
 interface Cart {
@@ -15,17 +15,20 @@ interface Cart {
   stylist: string;
   productId: string;
   quantity: number;
+  $id: string;
 }
 // const
 const cart = () => {
-  const { cartProducts } = useSelector((store: any) => store.shop);
-  const totalPrice = cartProducts.reduce((total: any, pro: any): number => {
-    const sixtyPercentPrice = Math.abs(((pro.minPrice + pro.maxPrice) / 2) * 0.6);
-    const pricePerProduct = sixtyPercentPrice * pro.quantity;
-    return total + pricePerProduct;
-  }, 0);
-  const shipping = 2100;
-  console.log(totalPrice);
+  const { user, cartProducts } = useSelector((store: any) => store.shop);
+  // const [cartProducts, setCartProducts] = useState<any>([]);
+
+  // useEffect(() => {
+  //   const getCar = async () => {
+  //     const carts = await appwriteServices.getCartProducts(user?.$id);
+  //     setCartProducts(carts?.documents);
+  //   };
+  //   getCar();
+  // }, []);
   return (
     <div className="w-full p-3 lg:p-0 lg:w-[95%] xl:w-[80%] my-0 lg:my-[1rem] mx-auto ">
       <h1 className="text-center text-[18px] lg:text-4xl font-semibold md:font-light my-[1rem] lg:my-[2rem]">
@@ -34,7 +37,7 @@ const cart = () => {
       {cartProducts.length >= 1 ? (
         <>
           <div className="flex flex-col lg:flex-row justify-between">
-            <aside className="w-full lg:w-[70%] xl:w-[60%]">
+            <aside className="w-full lg:w-[100%]">
               {cartProducts?.map((product: Cart) => {
                 return (
                   <>
@@ -42,33 +45,6 @@ const cart = () => {
                   </>
                 );
               })}
-            </aside>
-
-            <aside className="w-full md:w-1/2 md:mx-auto lg:w-[28%] xl:w-[40%] flex justify-end mt-3">
-              <div className="bg-[#fff] border-r-[1px] border-[#eaeaea] w-full lg:w-full xl:w-[80%] h-[40vh] px-5 py-5 rounded shadow-md">
-                <h1 className="text-center font-light text-xl my-2 uppercase">Price Summary</h1>
-                <p className="text-center text-red-500 p-2 bg-red-200 rounded-md">
-                  Note! Advance payment of only 60%
-                </p>
-                <div>
-                  <aside className="flex justify-between py-2">
-                    <p>Quantity</p>
-                    <p>60% Payable</p>
-                  </aside>
-                  <aside className="flex justify-between pb-2">
-                    <p>{cartProducts?.length}</p>
-                    <p>₦{totalPrice}</p>
-                  </aside>
-                  <aside className="flex justify-between pb-2">
-                    <p>Shipping</p>
-                    <p>₦{shipping}</p>
-                  </aside>
-                  <aside className="flex justify-between border-t-[1px] mt-2 border-slate-300">
-                    <p className="font-bold">Total</p>
-                    <p className="font-bold">₦{totalPrice + shipping}</p>
-                  </aside>
-                </div>
-              </div>
             </aside>
           </div>
         </>

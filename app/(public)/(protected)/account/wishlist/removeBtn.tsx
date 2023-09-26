@@ -12,6 +12,7 @@ interface Wishlist {
   stylist: string;
   productId: string;
   quantity: number;
+  $id: string;
 }
 interface Props {
   product: Wishlist;
@@ -19,12 +20,9 @@ interface Props {
 function RemoveBtn({ product }: Props) {
   const { user, authStatus } = useSelector((store: any) => store.shop);
 
-  console.log(product);
   const handleRemove = async () => {
     try {
-      if (product?.userId === user?.$id) {
-        await appwriteServices.removeWishlist(product.productId);
-      }
+      await appwriteServices.removeWishlist(product?.$id);
     } catch (error) {}
   };
   return (

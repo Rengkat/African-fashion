@@ -5,6 +5,7 @@ import Link from "next/link";
 import SanityImage from "./image";
 import AddCartButton from "../../addCartButton";
 import WishlistBtn from "@/components/WishlistBtn";
+import BuyNowButton from "../../buyNowBtn";
 interface Props {
   params: { _id: string };
 }
@@ -29,6 +30,7 @@ const product = async ({ params }: Props) => {
           <p className=" py-3">Slug: {product?.slug?.current}</p>
           <p className="text-xl font-light py-3">{product?.productDetails}</p>
           <AddCartButton product={product} />
+          <BuyNowButton product={product} />
           <WishlistBtn product={product} />
 
           <div className="font-light">

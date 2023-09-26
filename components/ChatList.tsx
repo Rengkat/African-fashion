@@ -1,8 +1,21 @@
 import React from "react";
 import CustomersChat from "./CustomersChat";
 import { BsSearch } from "react-icons/bs";
-const friends = [1, 3, 4, 5, 7, 8, 9, 6, 4, 3, 2, 45, 6, 7, 8];
-const ChatList = () => {
+
+interface UserChats {
+  $createdAt: string;
+  $id: string;
+  combinedId: string;
+  userId: string;
+  userName: string;
+  currentUserId: string;
+}
+
+interface Props {
+  userChats: UserChats[];
+  loading: boolean;
+}
+const ChatList = ({ userChats, loading }: Props) => {
   return (
     <div className="p-2 lg:p-5 ">
       <div className="hidden flex w-full items-center border-[1px] rounded-md bg-[#c1bfbf] border-[#999]">
@@ -15,15 +28,19 @@ const ChatList = () => {
           className="border-none outline-none py-2 px-4 w-full rounded-r-md"
         />
       </div>
-      <div className="mt-5 h-[50vh] md:h-[60vh] overflow-auto">
-        {friends.map((customer) => {
-          return (
-            <>
-              <CustomersChat />
-            </>
-          );
-        })}
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="mt-5 h-[50vh] md:h-[60vh] overflow-auto">
+          {userChats?.map((customer: UserChats) => {
+            return (
+              <React.Fragment key={customer.$id}>
+                <CustomersChat userChat={customer} loading={loading} />
+              </React.Fragment>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

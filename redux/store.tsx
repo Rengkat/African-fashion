@@ -25,7 +25,7 @@ export const store = configureStore({
       currentUser.email
     );
 
-    const userDetail = currentStylistCollectionByEmail.documents[0];
+    const userDetail = currentUserCollectionByEmail.documents[0];
     const stylistDetail = currentStylistCollectionByEmail.documents[0];
     // if the login user is not a customer, will be a stylist
     const detailCollection = userDetail || stylistDetail;
@@ -35,7 +35,7 @@ export const store = configureStore({
     const cart = await appwriteServices.getCartProducts(userId);
     const wishlist = await appwriteServices.getWishlist(userId);
     store.dispatch(addAuthenticatedUser({ ...currentUser, ...detailCollection }));
-
+    console.log();
     store.dispatch(getCart(cart?.documents));
     store.dispatch(getWishlist(wishlist?.documents));
   }

@@ -20,6 +20,7 @@ export const orderCollectionId = process.env.NEXT_PUBLIC_APPWRITE_ORDER_COLLECTI
 export const wishlistCollectionId = process.env.NEXT_PUBLIC_APPWRITE_WISHLIST_COLLECTION_ID!;
 export const userChatCollectionId = process.env.NEXT_PUBLIC_APPWRITE_USER_CHAT_COLLECTION_ID!;
 export const chatsCollectionId = process.env.NEXT_PUBLIC_APPWRITE_CHATS_COLLECTION_ID!;
+export const activeChatId = process.env.NEXT_PUBLIC_APPWRITE_ACTIVE_USER_CHAT_ID!;
 export const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOIN;
 
 const appwriteConfig = {

@@ -6,6 +6,7 @@ import appwriteConfig, {
   stylistCollectionId,
   userChatCollectionId,
   chatsCollectionId,
+  activeChatId,
 } from "./config";
 import { Client, Account, ID, Databases, Query } from "appwrite";
 
@@ -70,11 +71,12 @@ interface Wishlist {
   maxPrice: number;
   stylist: string;
   productId: string;
+  uniqueId: string;
 }
 interface updateCart {
   userId?: string;
   quantity: number;
-  productId: string;
+  uniqueId: string;
   // quantity: number;
 }
 interface RemovePro {
@@ -87,6 +89,12 @@ interface UpdateUser {
   city: string;
   phone: string;
   deliveryAddress: string;
+  userId: string;
+}
+interface Chats {
+  userName: string;
+  combinedId: string;
+  message: string;
   userId: string;
 }
 export class AppWriteService {
@@ -124,6 +132,7 @@ export class AppWriteService {
       throw error;
     }
   }
+  // iLogin
   async isLogin() {
     try {
       // get the current user by calling the function
@@ -132,6 +141,7 @@ export class AppWriteService {
     } catch (error) {}
     return false;
   }
+  // get current user
   async getCurrentUser() {
     try {
       return await account.get();
@@ -139,6 +149,7 @@ export class AppWriteService {
       throw error;
     }
   }
+  // logout
   async logOut() {
     try {
       return await account.deleteSession("current");
@@ -146,6 +157,7 @@ export class AppWriteService {
       throw error;
     }
   }
+  // create user collection
   async createUserCollection({ email, phone, firstName, surname }: CreateCollection) {
     const userDocument = {
       firstName,
@@ -161,6 +173,7 @@ export class AppWriteService {
 
     await db.createDocument(databaseId, userCollectionId, ID.unique(), userDocument);
   }
+  // create stylist collection
   async createStylistCollection({ email, phone, firstName, surname, company }: CreateCollection) {
     const userDocument = {
       firstName,
@@ -182,7 +195,7 @@ export class AppWriteService {
 
     await db.createDocument(databaseId, stylistCollectionId, ID.unique(), userDocument);
   }
-
+  // Update user -> edit
   async updateUserCollection({
     phone,
     firstName,
@@ -202,6 +215,7 @@ export class AppWriteService {
     };
     await db.updateDocument(databaseId, userCollectionId, userId, userDocument);
   }
+  // update newsletter subscription
   async updateSubscription({
     userId,
     subscribedToNewsLetter,
@@ -214,6 +228,7 @@ export class AppWriteService {
     };
     await db.updateDocument(databaseId, userCollectionId, userId, userDocument);
   }
+  // get current user collection
   async getCurrentUserCollection(userEmail: string) {
     try {
       const query = [Query.equal("email", userEmail)];
@@ -224,6 +239,7 @@ export class AppWriteService {
       throw error;
     }
   }
+  // get current stylist collection
   async getCurrentStylistCollection(userEmail: string) {
     try {
       const query = [Query.equal("email", userEmail)];
@@ -234,6 +250,7 @@ export class AppWriteService {
       throw error;
     }
   }
+  // get all stylist collection
   async getStylistCollection(id: string) {
     try {
       const query = [Query.equal("$id", id)];
@@ -244,6 +261,7 @@ export class AppWriteService {
       throw error;
     }
   }
+  // add to cart function
   async addToCart({
     userId,
     productName,
@@ -255,7 +273,6 @@ export class AppWriteService {
     quantity,
   }: Cart) {
     try {
-      const user = [Query.equal("userId", userId)];
       const cartProps = {
         userId,
         productName,
@@ -266,11 +283,12 @@ export class AppWriteService {
         productId,
         quantity,
       };
-      await db.createDocument(databaseId, cartCollectionId, productId, cartProps);
+      await db.createDocument(databaseId, cartCollectionId, ID.unique(), cartProps);
     } catch (error) {}
   }
-
+  // create order, that is checkout
   async createOrders() {}
+  // create wishlist
   async createWishlist({
     userId,
     productName,
@@ -279,25 +297,32 @@ export class AppWriteService {
     imageURL,
     stylist,
     productId,
+    uniqueId,
   }: Wishlist) {
     const newWishlist = { userId, productName, maxPrice, minPrice, imageURL, stylist, productId };
     try {
-      await db.createDocument(databaseId, wishlistCollectionId, productId, newWishlist);
+      await db.createDocument(
+        databaseId,
+        wishlistCollectionId,
+        uniqueId ?? ID.unique(),
+        newWishlist
+      );
     } catch (error) {}
   }
   // increase qty
-  async updateProductQty({ productId, quantity }: updateCart) {
+  async updateProductQty({ quantity, uniqueId }: updateCart) {
     const updateQty = {
       quantity,
     };
-    await db.updateDocument(databaseId, cartCollectionId, productId, updateQty);
+    await db.updateDocument(databaseId, cartCollectionId, uniqueId, updateQty);
   }
-
-  async removeProduct({ productId }: RemovePro) {
+  // remove product from cart
+  async removeProduct(uniqueId: string) {
     try {
-      await db.deleteDocument(databaseId, cartCollectionId, productId);
+      await db.deleteDocument(databaseId, cartCollectionId, uniqueId);
     } catch (error) {}
   }
+  // get specific cart product
   async getCartProducts(userId: string) {
     try {
       const query = [Query.equal("userId", userId)];
@@ -305,16 +330,18 @@ export class AppWriteService {
       return cart;
     } catch (error) {}
   }
-  async isProductInCart(productId: string) {
+  // check if the product is cart
+  async isProductInCart({ productId, userId }: { productId: string; userId: string }) {
     try {
-      const product = await db.getDocument(databaseId, cartCollectionId, productId);
-      return product;
+      const query = [Query.equal("userId", userId), Query.equal("productId", productId)];
+      const product = await db.listDocuments(databaseId, cartCollectionId, query);
+      return product.documents[0];
     } catch (error) {
       console.error("Error checking product in cart:", error);
       return false;
     }
   }
-
+  // get wishlist base on user id
   async getWishlist(userId: string) {
     try {
       const query = [Query.equal("userId", userId)];
@@ -322,18 +349,21 @@ export class AppWriteService {
       return data;
     } catch (error) {}
   }
+  // get all orders base on user id
   async getOrders() {}
-  async removeWishlist(productId: string) {
+  async removeWishlist($id: string) {
     try {
-      await db.deleteDocument(databaseId, wishlistCollectionId, productId);
+      await db.deleteDocument(databaseId, wishlistCollectionId, $id);
     } catch (error) {}
   }
+  // get all stylist
   async getStylists() {
     try {
       const data = await db.listDocuments(databaseId, stylistCollectionId);
       return data;
     } catch (error) {}
   }
+  // get single stylist
   async getSingleStylist(id: string) {
     try {
       const stylist = await db.getDocument(databaseId, stylistCollectionId, id);
@@ -344,25 +374,105 @@ export class AppWriteService {
     }
   }
   // messages
-  async createUserChats(payload: any) {
+  async createUserChats({
+    senderId,
+    senderName,
+    receiverId,
+    receiverName,
+  }: {
+    senderId: string;
+    senderName: string;
+    receiverId: string;
+    receiverName: string;
+  }) {
+    await db.createDocument(databaseId, userChatCollectionId, ID.unique(), {
+      userName: receiverName,
+      userId: receiverId,
+      currentUserId: senderId,
+    });
+    await db.createDocument(databaseId, userChatCollectionId, ID.unique(), {
+      userName: senderName,
+      userId: senderId,
+      currentUserId: receiverId,
+    });
+
     try {
-      await db.createDocument(databaseId, userChatCollectionId, ID.unique(), payload);
     } catch (error) {}
   }
-  async createChats(combinedId: string) {
+  async createChats({ combinedId, message, userId, userName }: Chats) {
+    const user = {
+      userName,
+      combinedId,
+      message,
+      userId,
+    };
     try {
-      await db.createDocument(databaseId, chatsCollectionId, ID.unique(), combinedId);
+      await db.createDocument(databaseId, chatsCollectionId, ID.unique(), user);
     } catch (error) {}
   }
-  async getUserChats(combinedId: string) {
-    const query = [Query.equal("combinedId", combinedId)];
+  async getUserChats(currentUserId: string) {
     try {
-      await db.listDocuments(databaseId, userChatCollectionId, query);
+      const senderIdQuery = [Query.equal("currentUserId", currentUserId)];
+      const response = await db.listDocuments(databaseId, userChatCollectionId, senderIdQuery);
+      return response?.documents;
+    } catch (error) {}
+  }
+
+  async getSingleUserChats(userId: string) {
+    const query = [Query.equal("userId", userId)];
+    try {
+      const response = await db.listDocuments(databaseId, userChatCollectionId, query);
+      return Boolean(response.documents[0]);
     } catch (error) {}
   }
   async getChats(combinedId: string) {
     try {
-      await db.getDocument(databaseId, chatsCollectionId, combinedId);
+      const query = [Query.equal("combinedId", combinedId)];
+      const chats = await db.listDocuments(databaseId, chatsCollectionId, query);
+
+      return chats.documents;
+    } catch (error) {}
+  }
+  // ACTIVE CHART
+  async createActiveChat({
+    combinedId,
+    userName,
+    userId,
+    currentUserId,
+  }: {
+    combinedId: string;
+    userName: string;
+    userId: string;
+    currentUserId: string;
+  }) {
+    try {
+      await db.createDocument(databaseId, activeChatId, ID.unique(), {
+        combinedId,
+        userName,
+        userId,
+        currentUserId,
+      });
+    } catch (error) {}
+  }
+  async updateActiveChat({
+    combinedId,
+    userName,
+    userId,
+    id,
+  }: {
+    combinedId: string;
+    userName: string;
+    userId: string;
+    id: string;
+  }) {
+    await db.updateDocument(databaseId, activeChatId, id, { combinedId, userName, userId });
+  }
+  async getActiveChat(combinedId: string) {
+    try {
+      const query = [Query.equal("combinedId", combinedId)];
+      const data = await db.listDocuments(databaseId, activeChatId, query);
+
+      return data.documents[0];
     } catch (error) {}
   }
 }
