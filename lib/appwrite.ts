@@ -1,3 +1,4 @@
+import { OrderType } from "@/types";
 import appwriteConfig, {
   databaseId,
   userCollectionId,
@@ -7,17 +8,19 @@ import appwriteConfig, {
   userChatCollectionId,
   chatsCollectionId,
   activeChatId,
+  checkoutBucketId,
+  orderCollectionId,
 } from "./config";
-import { Client, Account, ID, Databases, Query } from "appwrite";
+import { Client, Account, ID, Databases, Query, Storage } from "appwrite";
 
 // create client with endpoint and project id
-const appwriteClient = new Client()
+export const appwriteClient = new Client()
   .setEndpoint(appwriteConfig.appwriteUrl)
   .setProject(appwriteConfig.projectId);
 // now create an account with the client
 export const account = new Account(appwriteClient);
 export const db = new Databases(appwriteClient);
-const uniqueId = ID.unique();
+export const storage = new Storage(appwriteClient);
 
 type CreateAccount = {
   email: string;
@@ -97,6 +100,7 @@ interface Chats {
   message: string;
   userId: string;
 }
+
 export class AppWriteService {
   // create a new account in side appwrite
   async createUserAccount({ email, password, phone, firstName, surname, company }: CreateAccount) {
@@ -261,7 +265,51 @@ export class AppWriteService {
       throw error;
     }
   }
-  // add to cart function
+  // update stylist
+  async updateStylist({
+    website,
+    companyDescription,
+    companyAddress,
+    state,
+    city,
+    branches,
+    facebook,
+    twitter,
+    instagram,
+    pintrest,
+    services,
+    stylistId,
+  }: {
+    website: string;
+    companyDescription: string;
+    companyAddress: string;
+    state: string;
+    city: string;
+    branches: string;
+    facebook: string;
+    twitter: string;
+    instagram: string;
+    pintrest: string;
+    services: string;
+    stylistId: string;
+  }) {
+    try {
+      const userDocument = {
+        website,
+        companyDescription,
+        companyAddress,
+        state,
+        branches,
+        facebook,
+        twitter,
+        instagram,
+        pintrest,
+      };
+      // console.log(userDocument);
+      await db.updateDocument(databaseId, stylistCollectionId, stylistId, userDocument);
+    } catch (error) {}
+  }
+
   async addToCart({
     userId,
     productName,
@@ -286,8 +334,7 @@ export class AppWriteService {
       await db.createDocument(databaseId, cartCollectionId, ID.unique(), cartProps);
     } catch (error) {}
   }
-  // create order, that is checkout
-  async createOrders() {}
+
   // create wishlist
   async createWishlist({
     userId,
@@ -327,7 +374,7 @@ export class AppWriteService {
     try {
       const query = [Query.equal("userId", userId)];
       const cart = await db.listDocuments(databaseId, cartCollectionId, query);
-      return cart;
+      return cart.documents;
     } catch (error) {}
   }
   // check if the product is cart
@@ -335,6 +382,7 @@ export class AppWriteService {
     try {
       const query = [Query.equal("userId", userId), Query.equal("productId", productId)];
       const product = await db.listDocuments(databaseId, cartCollectionId, query);
+      console.log(product);
       return product.documents[0];
     } catch (error) {
       console.error("Error checking product in cart:", error);
@@ -349,8 +397,7 @@ export class AppWriteService {
       return data;
     } catch (error) {}
   }
-  // get all orders base on user id
-  async getOrders() {}
+
   async removeWishlist($id: string) {
     try {
       await db.deleteDocument(databaseId, wishlistCollectionId, $id);
@@ -473,6 +520,91 @@ export class AppWriteService {
       const data = await db.listDocuments(databaseId, activeChatId, query);
 
       return data.documents[0];
+    } catch (error) {}
+  }
+
+  async createImg({ imgFile }: { imgFile: any }) {
+    try {
+      const img = await storage.createFile(checkoutBucketId, ID.unique(), imgFile);
+
+      return img;
+    } catch (error) {}
+  }
+  async getOrders({ userId }: { userId: string }) {
+    const query = [Query.equal("userId", userId)];
+    try {
+      const orders = await db.listDocuments(databaseId, orderCollectionId, query);
+      return orders.documents;
+    } catch (error) {}
+  }
+  // create order, that is checkout
+  async createOrders({
+    sampleImageId,
+    calf,
+    biceps,
+    hipToAnkle,
+    insideLegOrInseam,
+    hipToKnee,
+    frontBodice,
+    wrist,
+    arm,
+    tight,
+    shoulder,
+    neck,
+    upperHip,
+    upperBust,
+    hips,
+    waist,
+    bustOrChest,
+    userId,
+    productName,
+    maxPrice,
+    minPrice,
+    imageURL,
+    stylist,
+    productId,
+    quantity,
+    deliveryDate,
+    balance,
+    amounPaid,
+    price,
+    status,
+  }: OrderType) {
+    try {
+      const orderData = {
+        sampleImageId,
+        calf,
+        biceps,
+        hipToAnkle,
+        insideLegOrInseam,
+        hipToKnee,
+        frontBodice,
+        wrist,
+        arm,
+        tight,
+        shoulder,
+        neck,
+        upperHip,
+        upperBust,
+        hips,
+        waist,
+        bustOrChest,
+        userId,
+        productName,
+        maxPrice,
+        minPrice,
+        imageURL,
+        stylist,
+        productId,
+        quantity,
+        deliveryDate,
+        balance,
+        amounPaid,
+        price,
+        status,
+      };
+
+      await db.createDocument(databaseId, orderCollectionId, ID.unique(), orderData);
     } catch (error) {}
   }
 }

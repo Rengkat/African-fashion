@@ -1,11 +1,10 @@
-import Measurements from "@/components/Measurment";
-import MeasurmentImages from "@/components/MeasurmentImages";
 import { getProduct } from "@/lib/data";
 import Link from "next/link";
 import SanityImage from "./image";
 import AddCartButton from "../addCartButton";
 import WishlistBtn from "@/components/WishlistBtn";
-import BuyNowButton from "../buyNowBtn";
+import BuyButton from "@/components/BuyButton";
+
 interface Props {
   params: { _id: string };
 }
@@ -30,7 +29,7 @@ const product = async ({ params }: Props) => {
           <p className=" py-3">Slug: {product?.slug?.current}</p>
           <p className="text-xl font-light py-3">{product?.productDetails}</p>
           <AddCartButton product={product} />
-          <BuyNowButton product={product} />
+          <BuyButton product={product} />
           <WishlistBtn product={product} />
           <div className="font-light">
             <div className="py-5">
@@ -46,20 +45,6 @@ const product = async ({ params }: Props) => {
               </p>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="my-10">
-        <p className="text-xl lg:text-2xl my-4 p-2">
-          <span className="text-red-700">Note!</span> Use the charts below. To submit your body
-          measurement. All measurement are in UK
-        </p>
-        <div className="flex flex-col-reverse lg:flex-row gap-6">
-          <aside className="w-full lg:w-1/2 border-2">
-            <MeasurmentImages />
-          </aside>
-          <aside className="w-full lg:w-1/2  bg-blue-200 p-5">
-            <Measurements product={product} />
-          </aside>
         </div>
       </div>
     </div>

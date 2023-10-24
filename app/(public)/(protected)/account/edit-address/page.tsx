@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { IoChevronBackCircleSharp } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 type UserDetails = {
   firstName: string;
   surname: string;
@@ -14,7 +15,7 @@ type UserDetails = {
 };
 const Edit = () => {
   const { user } = useSelector((store: any) => store.shop);
-
+  const router = useRouter();
   const [userDetail, setUserDetail] = useState<UserDetails>({
     firstName: "",
     surname: "",
@@ -46,6 +47,8 @@ const Edit = () => {
         deliveryAddress: userDetail.deliveryAddress,
         userId: user?.$id,
       });
+      window.location.reload();
+      router.push("/account");
     }
   };
   return (

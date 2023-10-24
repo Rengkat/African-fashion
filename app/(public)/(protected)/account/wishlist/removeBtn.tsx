@@ -12,10 +12,12 @@ interface Wishlist {
   stylist: string;
   productId: string;
   quantity: number;
+}
+interface All extends Wishlist {
   $id: string;
 }
 interface Props {
-  product: Wishlist;
+  product: All;
 }
 function RemoveBtn({ product }: Props) {
   const { user, authStatus } = useSelector((store: any) => store.shop);

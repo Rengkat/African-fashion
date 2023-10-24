@@ -28,7 +28,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../fashion-backend/schemas/user.ts"
+    "../fashion-backend/schemas/user.ts",
+    "app/(public)/(protected)/account/orders/OrderImage.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -3,7 +3,7 @@ import Hero from "../../components/Hero";
 import Display from "../../components/Display";
 import { customerSport } from "@/public/constants";
 import { getCategoryProducts } from "@/lib/data";
-const men = [2, 4, 6, 71, 3, 77, 8, 9];
+import Link from "next/link";
 export default async function Home() {
   const ladiesCooperate = await getCategoryProducts("ladies-cooperate-wears");
   const ladiesNative = await getCategoryProducts("ladies-native-wears");
@@ -35,7 +35,7 @@ export default async function Home() {
           <div className="flex justify-evenly">
             <div className="h-[70vh] w-[25%] hidden lg:block">
               <Image
-                src={"/girl.png"}
+                src={"/womandis.png"}
                 width={500}
                 height={500}
                 alt="lady"
@@ -48,14 +48,16 @@ export default async function Home() {
                   Make the right choice{" "}
                 </p>
                 <h1 className="font-bold text-3xl py-2">Get the right African wears</h1>
-                <button className="font-semibold border-b-2 border-blue-500 py-2 text-xl my-5">
-                  Shop now
-                </button>
+                <Link href={"/products"}>
+                  <button className="font-semibold border-b-2 border-blue-500 py-2 text-xl my-5">
+                    Shop now
+                  </button>
+                </Link>
               </div>
             </div>
             <div className=" h-[70vh] w-[25%] hidden lg:block">
               <Image
-                src={"/girl.png"}
+                src={"/menside.png"}
                 width={500}
                 height={500}
                 alt="lady"

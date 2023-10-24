@@ -9,6 +9,7 @@ interface Product {
   image: { _type: string; asset: { _ref: string } };
   maxPrice: number;
   minPrice: number;
+  stylist: string;
 }
 const LadiesNative = async ({ params }: any) => {
   const products = await getCategoryProducts("ladies-native-wears");

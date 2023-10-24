@@ -15,14 +15,13 @@ interface UserChats {
 const chats = () => {
   const { user } = useSelector((store: any) => store.shop);
   const [userChats, setUserChats] = useState<UserChats[]>([]);
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     const getChats = async () => {
       const data: any = await appwriteServices.getUserChats(user?.$id);
-      console.log(data);
+
       setUserChats(data);
       setLoading(false);
     };

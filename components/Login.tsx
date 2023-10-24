@@ -12,7 +12,6 @@ const Login = () => {
   const [err, setErr] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user } = useSelector((store: any) => store.shop);
   const router = useRouter();
   const dispatch = useDispatch();
 

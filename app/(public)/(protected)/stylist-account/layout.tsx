@@ -5,23 +5,23 @@ import { useEffect } from "react";
 import { CiUser, CiDeliveryTruck } from "react-icons/ci";
 import { BsBoxSeam, BsHeart } from "react-icons/bs";
 import { ImMenu } from "react-icons/im";
-import AccNavLink from "./nav-link";
+import AccNavLink from "../account/nav-link";
 import { useDispatch, useSelector } from "react-redux";
 import { openMobileProfile } from "@/redux/features/shopSlice";
 import appwriteServices, { db } from "@/lib/appwrite";
 import { useRouter } from "next/navigation";
 import lottieLoad from "../../../../public/lottieLoad.json";
 
-import { databaseId, userCollectionId } from "@/lib/config";
 import Lottie from "lottie-react";
 // import appwriteServices, { databaseId, db, userCollectionId } from "@/lib/appwrite";
 interface Props {
   children: React.ReactNode;
 }
 export default function AccountLayout({ children }: Props) {
-  const { isMobileProfileOpen, authStatus, user } = useSelector((store: any) => store.shop);
+  const { isMobileProfileOpen, user } = useSelector((store: any) => store.shop);
   const router = useRouter();
   const dispatch = useDispatch();
+
   useEffect(() => {
     const user = async () => {};
     user();
@@ -30,8 +30,8 @@ export default function AccountLayout({ children }: Props) {
     appwriteServices.logOut();
     window.location.reload();
   };
-  if (user?.company) {
-    router.replace("/stylist-account");
+  if (!user?.company) {
+    router.replace("/account");
     <>
       <div className="w-full h-screen flex justify-center items-center">
         <Lottie className="w-[10rem] h-[10rem]" animationData={lottieLoad} loop={true} />
@@ -48,23 +48,14 @@ export default function AccountLayout({ children }: Props) {
 
       <div className="w-full lg:w-[90%] xl:w-[80%] mx-auto flex my-5 gap-5 relative">
         <nav className="hidden md:block list-none w-[30%] h-[60vh] bg-[#fff] border-r-[1px] border-[#eaeaea] shadow-md rounded-lg">
-          <AccNavLink href={"/account"}>
+          <AccNavLink href={"/stylist-account"}>
             <CiUser fontSize={20} />
             <span>My Account</span>
           </AccNavLink>
 
-          <AccNavLink href={"/account/orders"}>
-            <BsBoxSeam fontSize={20} />
-            <span>Orders</span>
-          </AccNavLink>
-          <AccNavLink href={"/account/wishlist"}>
-            <BsHeart fontSize={20} />
-            <span>Wishlist</span>
-          </AccNavLink>
-
-          <AccNavLink href={"/account/address"}>
+          <AccNavLink href={"/stylist-account/branches"}>
             <CiDeliveryTruck fontSize={25} />
-            <span>Delivery Address</span>
+            <span>Company Branches</span>
           </AccNavLink>
           <li className=" font-semibold p-5">
             <button

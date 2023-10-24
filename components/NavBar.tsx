@@ -3,12 +3,9 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BsSearch, BsBoxSeam, BsHeart } from "react-icons/bs";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { CiUser } from "react-icons/ci";
 import NavLink from "./NavLinks";
 import Menu from "./menu";
 import Profile from "./profile";
-import appwriteServices from "@/lib/appwrite";
 import { useSelector } from "react-redux";
 
 const NavBar = () => {
@@ -22,11 +19,11 @@ const NavBar = () => {
             <Image src="/logo.svg" width={500} height={500} alt="logo" />
           </NavLink>
         </header>
-        <ul className=" hidden  xl:flex gap-5 text-2xl justify-center font-light w-[30%]">
+        <div className=" hidden  xl:flex gap-5 text-2xl justify-center font-light w-[30%]">
           <NavLink href={"/"}>HOME</NavLink>
           <NavLink href={"/products"}>SHOP</NavLink>
           <NavLink href={"/stylists"}>STYLISTS</NavLink>
-        </ul>
+        </div>
         <div className="hidden xl:flex items-center gap-7 pr-8 w-[60%] justify-end">
           <div className="border-[1px] border-slate-500 flex justify-between items-center w-[80%] rounded-lg ">
             <input
@@ -39,7 +36,9 @@ const NavBar = () => {
               className=" w-[calc(100%-80%)] border-l-[1px] border-slate-500 text-slate-500"
             />
           </div>
-          <Profile />
+          <div>
+            <Profile />
+          </div>
 
           <Link href={"/chats"}>
             <div className="relative">
@@ -50,11 +49,6 @@ const NavBar = () => {
                 alt="account"
                 className="w-[3.5rem] h-[3rem]"
               />
-              {authStatus && (
-                <p className="absolute w-5 h-5 p-3 bg-blue-300 text-red-500 font-semibold rounded-full top-0 right-2 flex justify-center items-center">
-                  12
-                </p>
-              )}
             </div>
           </Link>
 

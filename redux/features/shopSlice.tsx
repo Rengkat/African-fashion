@@ -9,12 +9,16 @@ const initialState = {
   cartProducts: [],
   wishlist: [],
   userChartWith: {},
+  checkoutDetails: {},
 };
 
 const shopSlice = createSlice({
   name: "shop",
   initialState,
   reducers: {
+    getCheckoutDetails(state, action) {
+      state.checkoutDetails = action.payload;
+    },
     openMobileMenu(state) {
       state.isMobileMenuOpen = !state.isMobileMenuOpen;
     },
@@ -52,5 +56,6 @@ export const {
   getCart,
   getWishlist,
   onChangeUserChat,
+  getCheckoutDetails,
 } = shopSlice.actions; // Update the export here
 export default shopSlice.reducer;

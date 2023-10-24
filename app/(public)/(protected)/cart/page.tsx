@@ -20,15 +20,7 @@ interface Cart {
 // const
 const cart = () => {
   const { user, cartProducts } = useSelector((store: any) => store.shop);
-  // const [cartProducts, setCartProducts] = useState<any>([]);
 
-  // useEffect(() => {
-  //   const getCar = async () => {
-  //     const carts = await appwriteServices.getCartProducts(user?.$id);
-  //     setCartProducts(carts?.documents);
-  //   };
-  //   getCar();
-  // }, []);
   return (
     <div className="w-full p-3 lg:p-0 lg:w-[95%] xl:w-[80%] my-0 lg:my-[1rem] mx-auto ">
       <h1 className="text-center text-[18px] lg:text-4xl font-semibold md:font-light my-[1rem] lg:my-[2rem]">

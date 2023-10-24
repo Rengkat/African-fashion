@@ -14,15 +14,23 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { isProfileOpen, authStatus, user } = useSelector((store: any) => store.shop);
   const router = useRouter();
-
+  const [userDetail, setUserUserDetail] = useState<any>(null);
   const hanleLogOut = () => {
     appwriteServices.logOut();
     router.replace("/");
   };
+  useEffect(() => {
+    const getUserDetail = async () => {
+      const data = await appwriteServices.getCurrentUser();
+
+      setUserUserDetail(data);
+    };
+    getUserDetail();
+  }, [authStatus]);
   return (
     <div
       onClick={() => dispatch(openProfile())}
-      className="relative flex items-center gap-2 w-[15rem] cursor-pointer ">
+      className="relative flex items-center gap-2 w-[10rem] cursor-pointer ">
       <Image
         src="/account 2.svg"
         width={50}
@@ -30,7 +38,9 @@ const Profile = () => {
         alt="account"
         className="w-[2.5rem] h-[2.5rem]"
       />
-      {authStatus && <p className="font-semibold text-[16px] xl:text-[20px]">{user?.name}</p>}
+      <div>
+        <p className="font-semibold text-[16px] xl:text-[20px]">{authStatus && userDetail?.name}</p>
+      </div>
 
       <MdKeyboardArrowDown fontSize={20} />
       <div

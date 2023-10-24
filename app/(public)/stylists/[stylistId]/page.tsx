@@ -31,6 +31,7 @@ const seller = async ({ params, searchParams }: Props) => {
   const id = params.stylistId;
   const stylist: any = await appwriteServices.getSingleStylist(id);
   // console.log(searchParams);
+  console.log(stylist);
   return (
     <div className="my-10">
       <div className="w-[95%] lg:w-[80%] mx-auto lg:h-[60vh] md:h-[80vh]  flex flex-col lg:flex-row ">

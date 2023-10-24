@@ -29,7 +29,7 @@ const ChatList = ({ userChats, loading }: Props) => {
         />
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-center my-5">Loading...</p>
       ) : (
         <div className="mt-5 h-[50vh] md:h-[60vh] overflow-auto">
           {userChats?.map((customer: UserChats) => {

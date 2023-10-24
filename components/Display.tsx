@@ -20,11 +20,13 @@ interface Props {
 }
 const Display = ({ product }: Props) => {
   const { user, wishlist } = useSelector((store: any) => store.shop);
-  const [message, setMessage] = useState();
   const [isHover, setIsHover] = useState(false);
   const handleAddWishlist = async () => {
     try {
-      const existProduct = await appwriteServices.isProductInCart(product?._id);
+      const existProduct = await appwriteServices.isProductInCart({
+        productId: product?._id,
+        userId: user?.$id,
+      });
       if (existProduct) {
       }
       await appwriteServices.createWishlist({
@@ -35,6 +37,7 @@ const Display = ({ product }: Props) => {
         imageURL: product?.image?.asset._ref,
         stylist: product?.stylist,
         productId: product?._id,
+        uniqueId: "",
       });
     } catch (error) {}
   };

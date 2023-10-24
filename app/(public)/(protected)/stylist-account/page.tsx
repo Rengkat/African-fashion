@@ -1,12 +1,11 @@
 "use client";
 import appwriteServices, { db } from "@/lib/appwrite";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
-const Account = () => {
+const StylistAccount = () => {
   const { user } = useSelector((store: any) => store.shop);
+  // console.log(user);
   const [loading, setLoading] = useState(false);
   const handleSubscribe = async () => {
     setLoading(true);
@@ -25,29 +24,27 @@ const Account = () => {
         <aside className="border-[2px] border-[#eaeaea] w-[100%] rounded shadow-sm">
           <h3 className="border-b-[2px] border-[#eaeaea] p-5">ACCOUNT DETAILS</h3>
           <div className="p-5">
-            <label className="font-semibold text-[19px]">Name:</label>
-            <p>
-              {user?.surname} {user?.firstName}
-            </p>
+            <label className="font-semibold text-[19px]">Company Name:</label>
+            <p>{user?.company}</p>
             <label className="font-semibold text-[19px] mt-2" htmlFor="email">
-              Email:
+              Company Email:
             </label>
             <p>{user?.email}</p>
           </div>
         </aside>
         <aside className="border-[2px] border-[#eaeaea] w-[100%] rounded shadow-sm ">
-          <h3 className="p-5 border-b-[2px] border-[#eaeaea]">ADDRESS BOOK</h3>
+          <h3 className="p-5 border-b-[2px] border-[#eaeaea]">MAIN OFFICE ADDRESS </h3>
           <div className="p-5">
-            <label className="font-semibold text-[19px] mb-2">Your default shipping address:</label>
+            <label className="font-semibold text-[19px] mb-2">Your default company address:</label>
             <>
-              {user?.deliveryAddress ? (
-                user.deliveryAddress
+              {user?.companyAddress ? (
+                user.companyAddress
               ) : (
                 <>
                   <Link
                     className="rounded p-2 bg-blue-400 text-white border-slate-300"
-                    href={"account/address"}>
-                    Add Delivery address
+                    href={"stylist-account/edit"}>
+                    Add company address and branches
                   </Link>
                 </>
               )}
@@ -59,10 +56,10 @@ const Account = () => {
       </div>
       <div className="flex justify-between gap-1 lg:gap-5 mt-5">
         <aside className="border-[2px] border-[#eaeaea] w-[100%] rounded shadow-sm">
-          <h3 className="p-5 border-b-[2px] border-[#eaeaea]">STORE CREDIT</h3>
+          <h3 className="p-5 border-b-[2px] border-[#eaeaea]">Company Description</h3>
           <div className="p-5 flex items-center gap-5">
-            <Image src={"/wallet.png"} width={500} height={500} alt="icon" className="w-10 h-10" />
-            <p>{user?.walletAmount}.00</p>
+            {/* <Image src={"/wallet.png"} width={500} height={500} alt="icon" className="w-10 h-10" /> */}
+            <p>{user?.companyDescription}</p>
           </div>
         </aside>
         <aside className="border-[2px] border-[#eaeaea] w-[100%] rounded shadow-sm">
@@ -92,4 +89,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default StylistAccount;

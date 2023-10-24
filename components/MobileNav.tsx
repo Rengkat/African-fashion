@@ -11,7 +11,9 @@ import { openMobileMenu } from "../redux/features/shopSlice";
 import appwriteServices from "@/lib/appwrite";
 const MobileNav = () => {
   const dispatch = useDispatch();
-  const { isMobileMenuOpen, authStatus, user } = useSelector((store: any) => store.shop);
+  const { isMobileMenuOpen, authStatus, user, cartProducts } = useSelector(
+    (store: any) => store.shop
+  );
 
   return (
     <div
@@ -23,9 +25,7 @@ const MobileNav = () => {
         className={`${
           isMobileMenuOpen ? "mr-[-100vw]" : "mr-[100vw]"
         } bg-white z-[40] w-[60%] sm:w-[50%] md:[40%] h-[100vh] relative`}>
-        <div
-          // onClick={() => dispatch(openMobileMenu())}
-          className=" absolute top-6 right-5 border-[1px] border-slate-400 w-10 h-10 rounded-full flex items-center justify-center">
+        <div className=" absolute top-6 right-5 border-[1px] border-slate-400 w-10 h-10 rounded-full flex items-center justify-center">
           <GrClose fontSize={30} className="p-1" />
         </div>
         <div className="pl-[1rem] pt-[5rem]">
@@ -46,17 +46,12 @@ const MobileNav = () => {
               </Link>
               <Link href={"/chats"} className="relative">
                 <IoLogoWechat className="text-blue-400 text-3xl" />
-                {authStatus && (
-                  <p className="absolute w-3 h-3 p-2 md:p-3 bg-blue-300 text-red-500 text-xs md:text-[16px] font-semibold rounded-full -top-1 md:-top-3 right-0 md:right-0 flex justify-center items-center">
-                    12
-                  </p>
-                )}
               </Link>
               <Link href={"/cart"} className="relative">
                 <BsCart4 className="text-blue-400 text-3xl" />
                 {authStatus && (
                   <p className="absolute -z-10 w-3 h-3 p-2 md:p-3 bg-blue-300 text-red-500 text-xs md:text-[16px] font-semibold rounded-full -top-1 md:-top-3 right-1 md:right-0 flex justify-center items-center">
-                    12
+                    {cartProducts?.length}
                   </p>
                 )}
               </Link>
@@ -75,7 +70,7 @@ const MobileNav = () => {
             <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/"}>
               HOME
             </Link>
-            <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/shop"}>
+            <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/products"}>
               SHOP
             </Link>
             <Link className="block p-3 hover:bg-slate-500 rounded-md" href={"/stylists"}>

@@ -61,7 +61,7 @@ const CustomersChat = ({ userChat, loading }: Props) => {
           <p className="md:text-sm lg:text-[16px]">{userChat.userName}</p>
           <div className="flex items-center gap-[5px]">
             <div className="bg-green-500 w-[7px] h-[7px] rounded-full shadow mt-1"></div>
-            <p className="text-[#999]">online</p>
+            <p className="text-[#999]">stylist</p>
           </div>
         </div>
         <div className="hidden flex flex-col justify-between">

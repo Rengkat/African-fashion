@@ -31,12 +31,13 @@ export const store = configureStore({
     const detailCollection = userDetail || stylistDetail;
 
     const userId = userDetail?.$id;
+    console.log(userId);
 
     const cart = await appwriteServices.getCartProducts(userId);
     const wishlist = await appwriteServices.getWishlist(userId);
     store.dispatch(addAuthenticatedUser({ ...currentUser, ...detailCollection }));
     console.log();
-    store.dispatch(getCart(cart?.documents));
+    store.dispatch(getCart(cart));
     store.dispatch(getWishlist(wishlist?.documents));
   }
 })();

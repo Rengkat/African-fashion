@@ -13,8 +13,11 @@ interface Wishlist {
   productId: string;
   quantity: number;
 }
+interface All extends Wishlist {
+  $id: string;
+}
 interface Props {
-  product: Wishlist;
+  product: All;
 }
 const WishListItems = ({ product }: Props) => {
   return (

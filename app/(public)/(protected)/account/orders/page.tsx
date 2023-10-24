@@ -1,18 +1,33 @@
+"use client";
 import OrdersProduct from "@/components/OrdersProduct";
-import Image from "next/image";
-import React from "react";
-const me = [1, 2, 5, 6];
+import appwriteServices from "@/lib/appwrite";
+import { OrderType } from "@/types";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+interface Order extends OrderType {
+  $id: string;
+  $createdAt: string;
+}
 const Orders = () => {
+  const { user } = useSelector((store: any) => store.shop);
+  const [orders, setOrders] = useState<OrderType[] | any>([]);
+  useEffect(() => {
+    const getOrders = async () => {
+      const data = await appwriteServices.getOrders({ userId: user?.$id });
+
+      setOrders(data);
+    };
+    getOrders();
+  }, []);
   return (
     <div>
-      <h3 className="p-5 border-b-[2px] border-[#eaeaea] text-xl font-bold ">
-        Orders
-      </h3>
+      <h3 className="p-5 border-b-[2px] border-[#eaeaea] text-xl font-bold ">Orders</h3>
       <div className="p-5">
-        {me.map((product) => {
+        {orders?.map((product: Order) => {
           return (
             <>
-              <OrdersProduct />
+              <OrdersProduct product={product} />
             </>
           );
         })}

@@ -1,7 +1,8 @@
 "use client";
 import appwriteServices from "@/lib/appwrite";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { getCheckoutDetails } from "@/redux/features/shopSlice";
 
 type Product = {
   name: string;
@@ -25,34 +26,24 @@ interface Cart {
   productId: string;
   quantity: number;
 }
-export default function BuyNowButton({ product }: Props) {
+export default function BuyButton({ product }: Props) {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { user, authStatus } = useSelector((store: any) => store.shop);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = () => {
     if (!authStatus) {
       router.replace("/login");
     }
-    // check if product already in the checkout. If in cart, throw a message
-    const productInCart = await appwriteServices.isProductInCart(product._id);
-
-    if (productInCart && productInCart?.userId === user?.$id) {
-      const updatedQuantity = productInCart.quantity + 1;
-
-      await appwriteServices.updateProductQty({
-        productId: product?._id,
-        quantity: updatedQuantity,
-      });
-    }
-    // await appwriteServices.
-    router.push("/account/checkout");
+    dispatch(getCheckoutDetails(product));
+    router.push("/measurement");
   };
 
   return (
     <>
       <button onClick={handleAddToCart} className="w-full bg-[#000] text-white py-2 px-3 my-2">
-        BUY NOW
+        ORDER NOW!
       </button>
     </>
   );

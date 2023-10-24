@@ -39,12 +39,11 @@ export default function AddCartButton({ product }: Props) {
       productId: product._id,
       userId: user?.$id,
     });
-    // console.log(productInCart);
+
     if (productInCart) {
       const updatedQuantity = productInCart.quantity + 1;
 
       await appwriteServices.updateProductQty({
-        productId: product?._id,
         quantity: updatedQuantity,
         uniqueId: productInCart?.$id,
       });
@@ -60,6 +59,7 @@ export default function AddCartButton({ product }: Props) {
         quantity: 1,
       });
     }
+    window.location.reload();
   };
 
   return (
