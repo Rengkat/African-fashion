@@ -8,7 +8,10 @@ interface Props {
 }
 const NavBarComp = dynamic(() => import("../../components/NavBar"), { ssr: false });
 const MobileNav = dynamic(() => import("../../components/MobileNav"), { ssr: false });
-
+export const metadata = {
+  title: "Classic Fashion - Home",
+  description: "Buy your African Native and cooperate wears online and connect with stylist",
+};
 export default function PublicLayout({ children }: Props) {
   return (
     <>
