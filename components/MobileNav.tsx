@@ -8,7 +8,7 @@ import { HiMenu } from "react-icons/hi";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { openMobileMenu } from "../redux/features/shopSlice";
-import appwriteServices from "@/lib/appwrite";
+
 const MobileNav = () => {
   const dispatch = useDispatch();
   const { isMobileMenuOpen, authStatus, user, cartProducts } = useSelector(

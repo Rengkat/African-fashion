@@ -47,7 +47,7 @@ const Edit = () => {
         deliveryAddress: userDetail.deliveryAddress,
         userId: user?.$id,
       });
-      window.location.reload();
+
       router.push("/account");
     }
   };

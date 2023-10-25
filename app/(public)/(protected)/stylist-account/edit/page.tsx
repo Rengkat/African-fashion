@@ -62,7 +62,7 @@ const Edit = () => {
         services: userDetail.services,
         stylistId: user?.$id,
       });
-      window.location.reload();
+
       router.push("/stylist-account");
     }
     setUserDetail({
