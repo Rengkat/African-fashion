@@ -2,6 +2,7 @@
 import appwriteServices from "@/lib/appwrite";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import Message from "@/components/Message";
 
 type Product = {
   name: string;
@@ -41,12 +42,11 @@ export default function AddCartButton({ product }: Props) {
     });
 
     if (productInCart) {
-      const updatedQuantity = productInCart.quantity + 1;
-
-      await appwriteServices.updateProductQty({
-        quantity: updatedQuantity,
-        uniqueId: productInCart?.$id,
-      });
+      return (
+        <>
+          <Message text="Sorry, item is already in the cart" redirectRoute="/products" />
+        </>
+      );
     } else {
       await appwriteServices.addToCart({
         userId: user?.$id,

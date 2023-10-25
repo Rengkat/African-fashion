@@ -275,22 +275,22 @@ label {
 }
 
 .slider-1 {
-  background-image: url("../public/men.png");
+  background-image: url(../public/men.png);
   display: flex;
   justify-content: flex-end;
 }
 .slider-2 {
-  background-image: url("../public/woman-hero.png");
+  background-image: url(../public/woman-hero.png);
   background-position: right;
   background-size: contain;
 }
 .slider-3 {
-  background-image: url("../public/men-cooperate-hero.png");
+  background-image: url(../public/men-cooperate-hero.png);
   background-position: left;
   background-size: contain;
 }
 .slider-4 {
-  background-image: url("../public/women-hero.png");
+  background-image: url(../public/women-hero.png);
   background-position: right;
   background-size: contain;
 }

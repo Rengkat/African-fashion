@@ -57,27 +57,33 @@ const Profile = () => {
           ""
         )}
 
-        <ul className="my-5">
+        <div className="my-5">
           {authStatus && (
             <>
               <Link href={"account"}>
-                <li className="flex gap-2 items-center py-2 hover:bg-slate-200 px-2 rounded-md">
+                <div className="flex gap-2 items-center py-2 hover:bg-slate-200 px-2 rounded-md">
                   <CiUser fontSize={20} /> <span> My Account</span>
-                </li>
+                </div>
               </Link>
-              <Link href={"account/orders"}>
-                <li className="flex gap-2 items-center py-2 hover:bg-slate-200 px-2 rounded-md">
-                  <BsBoxSeam fontSize={20} /> <span> Orders</span>
-                </li>
-              </Link>
-              <Link href={"account/wishlist"}>
-                <li className="flex gap-2 items-center py-2 hover:bg-slate-200 px-2 rounded-md ">
-                  <BsHeart fontSize={20} /> <span> Wishlist</span>
-                </li>
-              </Link>
+              <div>
+                {!user?.company && (
+                  <>
+                    <Link href={"account/orders"}>
+                      <div className="flex gap-2 items-center py-2 hover:bg-slate-200 px-2 rounded-md">
+                        <BsBoxSeam fontSize={20} /> <span> Orders</span>
+                      </div>
+                    </Link>
+                    <Link href={"account/wishlist"}>
+                      <div className="flex gap-2 items-center py-2 hover:bg-slate-200 px-2 rounded-md ">
+                        <BsHeart fontSize={20} /> <span> Wishlist</span>
+                      </div>
+                    </Link>
+                  </>
+                )}
+              </div>
             </>
           )}
-        </ul>
+        </div>
 
         {authStatus && (
           <button

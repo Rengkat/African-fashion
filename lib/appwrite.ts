@@ -356,13 +356,7 @@ export class AppWriteService {
       );
     } catch (error) {}
   }
-  // increase qty
-  async updateProductQty({ quantity, uniqueId }: updateCart) {
-    const updateQty = {
-      quantity,
-    };
-    await db.updateDocument(databaseId, cartCollectionId, uniqueId, updateQty);
-  }
+
   // remove product from cart
   async removeProduct(uniqueId: string) {
     try {
@@ -382,7 +376,7 @@ export class AppWriteService {
     try {
       const query = [Query.equal("userId", userId), Query.equal("productId", productId)];
       const product = await db.listDocuments(databaseId, cartCollectionId, query);
-      console.log(product);
+
       return product.documents[0];
     } catch (error) {
       console.error("Error checking product in cart:", error);

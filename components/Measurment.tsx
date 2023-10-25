@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import Checkout from "./Checkout";
 import { usePaystackPayment } from "react-paystack";
 import { useRouter } from "next/navigation";
-import Message from "@/app/(public)/measurement/Message";
 interface Product {
   _id: string;
   name: string;

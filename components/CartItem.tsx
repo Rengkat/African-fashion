@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React from "react";
 import CartImage from "./CartImage";
 import appwriteServices from "@/lib/appwrite";
@@ -20,11 +19,12 @@ interface Props {
   product: Cart;
 }
 const CartItem = ({ product }: Props) => {
-  const { user, authStatus, cartProducts } = useSelector((store: any) => store.shop);
+  const { user } = useSelector((store: any) => store.shop);
 
   const handleRemove = async () => {
     try {
       await appwriteServices.removeProduct(product?.$id);
+      window.location.reload();
     } catch (error) {}
     // console.log("first");
   };
@@ -41,39 +41,7 @@ const CartItem = ({ product }: Props) => {
       uniqueId: product?.$id,
     });
   };
-  const handleIncrease = async () => {
-    // check if product already in the cart. If in cart, increase quantity
-    const productInCart = await appwriteServices.isProductInCart({
-      productId: product.productId,
-      userId: user?.$id,
-    });
 
-    if (productInCart) {
-      const updatedQuantity = productInCart.quantity + 1;
-
-      await appwriteServices.updateProductQty({
-        uniqueId: product?.$id,
-        quantity: updatedQuantity,
-      });
-    }
-  };
-  const handleDecrease = async () => {
-    // check if product qty is less than 1 then remove
-    const productInCart: any = await appwriteServices.isProductInCart({
-      productId: product.productId,
-      userId: user?.$id,
-    });
-
-    if (productInCart?.quantity <= 1) {
-      await appwriteServices.removeProduct(product?.$id);
-    } else {
-      const updatedQuantity = productInCart?.quantity - 1;
-      await appwriteServices.updateProductQty({
-        uniqueId: product?.$id,
-        quantity: updatedQuantity,
-      });
-    }
-  };
   return (
     <>
       <div className=" w-full flex bg-[#fff] border-r-[1px] border-[#eaeaea] p-3 rounded-md my-3 shadow-md">

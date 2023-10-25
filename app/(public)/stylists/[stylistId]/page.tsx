@@ -55,7 +55,7 @@ const seller = async ({ params, searchParams }: Props) => {
                   <>No company Description</>
                 )}
               </p>
-              <Link className=" text-blue-600" href={""}>
+              <Link className=" text-blue-600" href={stylist?.website}>
                 {stylist.website ? stylist?.website : <>No official website yet</>}
               </Link>
             </div>
@@ -92,18 +92,18 @@ const seller = async ({ params, searchParams }: Props) => {
               <BsTelephoneFill /> <span>{stylist?.phone}</span>
             </button>
             <div className="flex justify-between my-3">
-              <a href={stylist?.twitter}>
+              <Link href={stylist?.twitter}>
                 <FaTwitter fontSize={25} className="text-blue-400" />
-              </a>
-              <a href={stylist.facebook}>
+              </Link>
+              <Link href={stylist.facebook}>
                 <FaFacebookSquare fontSize={25} className="text-blue-800" />
-              </a>
-              <a href={stylist.instagram}>
+              </Link>
+              <Link href={stylist.instagram}>
                 <BsInstagram fontSize={25} className="text-pink-600" />
-              </a>
-              <a href={stylist.pintrest}>
+              </Link>
+              <Link href={stylist.pintrest}>
                 <BsPinterest fontSize={25} className="text-red-600" />
-              </a>
+              </Link>
             </div>
           </div>
         </aside>

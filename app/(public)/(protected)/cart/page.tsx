@@ -1,11 +1,11 @@
 "use client";
 import CartItem from "@/components/CartItem";
-import Image from "next/image";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import appwriteServices from "@/lib/appwrite";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Message from "../../../../components/Message";
 interface Cart {
   userId: string;
   imageURL: string;
@@ -20,7 +20,14 @@ interface Cart {
 // const
 const cart = () => {
   const { user, cartProducts } = useSelector((store: any) => store.shop);
-
+  const router = useRouter();
+  if (user?.company) {
+    return (
+      <>
+        <Message text="Sorry! Is only for buyers" redirectRoute="/products" />
+      </>
+    );
+  }
   return (
     <div className="w-full p-3 lg:p-0 lg:w-[95%] xl:w-[80%] my-0 lg:my-[1rem] mx-auto ">
       <h1 className="text-center text-[18px] lg:text-4xl font-semibold md:font-light my-[1rem] lg:my-[2rem]">
