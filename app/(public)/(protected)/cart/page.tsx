@@ -2,8 +2,6 @@
 import CartItem from "@/components/CartItem";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Message from "../../../../components/Message";
 interface Cart {
@@ -20,7 +18,7 @@ interface Cart {
 // const
 const cart = () => {
   const { user, cartProducts } = useSelector((store: any) => store.shop);
-  const router = useRouter();
+
   if (user?.company) {
     return (
       <>

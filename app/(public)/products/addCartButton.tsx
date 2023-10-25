@@ -59,7 +59,10 @@ export default function AddCartButton({ product }: Props) {
         quantity: 1,
       });
     }
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
+    router.push("/cart");
   };
 
   return (

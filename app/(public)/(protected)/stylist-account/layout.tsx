@@ -28,7 +28,6 @@ export default function AccountLayout({ children }: Props) {
   }, []);
   const handleLogout = () => {
     appwriteServices.logOut();
-    window.location.reload();
   };
   if (!user?.company) {
     router.replace("/account");

@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { BsHeart } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import Message from "./Message";
 interface Product {
   _id: string;
   name: string;
@@ -28,6 +29,11 @@ const Display = ({ product }: Props) => {
         userId: user?.$id,
       });
       if (existProduct) {
+        return (
+          <>
+            <Message text="Item exist in the cart" redirectRoute="/products" />
+          </>
+        );
       }
       await appwriteServices.createWishlist({
         userId: user.$id,

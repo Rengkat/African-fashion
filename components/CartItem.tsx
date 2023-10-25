@@ -24,7 +24,9 @@ const CartItem = ({ product }: Props) => {
   const handleRemove = async () => {
     try {
       await appwriteServices.removeProduct(product?.$id);
-      window.location.reload();
+      if (typeof window !== "undefined") {
+        window.location.reload();
+      }
     } catch (error) {}
     // console.log("first");
   };
