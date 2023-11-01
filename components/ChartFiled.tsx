@@ -27,7 +27,8 @@ interface Conversation {
   $id: string;
 }
 const ChartFiled = () => {
-  const localStorageCombinedId: any = localStorage.getItem("combinedId");
+  const localStorageCombinedId: any =
+    typeof window !== "undefined" && localStorage.getItem("combinedId");
 
   const [message, setMessage] = useState<any>("");
   const [conversations, setConversations] = useState<any>([]);

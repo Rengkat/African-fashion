@@ -20,7 +20,8 @@ interface Props {
 }
 
 const CustomersChat = ({ userChat, loading }: Props) => {
-  const localStorageCombinedId: any = localStorage.getItem("combinedId");
+  const localStorageCombinedId: any =
+    typeof window !== "undefined" && localStorage.getItem("combinedId");
   const { user } = useSelector((store: any) => store.shop);
   const combinedId =
     user?.$id > userChat?.userId ? user?.$id + userChat?.userId : userChat?.userId + user?.$id;
