@@ -14,7 +14,6 @@ const Profile = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isProfileOpen, authStatus, user } = useSelector((store: any) => store.shop);
-  // const router = useRouter();
   const [userDetail, setUserUserDetail] = useState<any>(null);
   const hanleLogOut = () => {
     appwriteServices.logOut();
