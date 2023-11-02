@@ -8,16 +8,16 @@ import { CiUser } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { openProfile } from "@/redux/features/shopSlice";
 import appwriteServices from "@/lib/appwrite";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { isProfileOpen, authStatus, user } = useSelector((store: any) => store.shop);
-  const router = useRouter();
+  // const router = useRouter();
   const [userDetail, setUserUserDetail] = useState<any>(null);
   const hanleLogOut = () => {
     appwriteServices.logOut();
-    router.replace("/");
+    // router.replace("/");
   };
   useEffect(() => {
     const getUserDetail = async () => {

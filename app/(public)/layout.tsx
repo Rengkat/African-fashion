@@ -1,7 +1,6 @@
 import "../globals.css";
 // import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-// import MobileNav from "../../components/MobileNav";
 import dynamic from "next/dynamic";
 interface Props {
   children: React.ReactNode;

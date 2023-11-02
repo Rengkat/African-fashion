@@ -1,7 +1,7 @@
 "use client";
 import appwriteServices from "@/lib/appwrite";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import Message from "@/components/Message";
 
 type Product = {
@@ -27,42 +27,43 @@ interface Cart {
   quantity: number;
 }
 export default function AddCartButton({ product }: Props) {
-  const router = useRouter();
+  // const router = useRouter();
 
   const { user, authStatus } = useSelector((store: any) => store.shop);
 
   const handleAddToCart = async () => {
     if (!authStatus) {
-      router.replace("/login");
-    }
-    // check if product already in the cart. If in cart, increase quantity
-    const productInCart = await appwriteServices.isProductInCart({
-      productId: product._id,
-      userId: user?.$id,
-    });
-
-    if (productInCart) {
-      return (
-        <>
-          <Message text="Sorry, item is already in the cart" redirectRoute="/products" />
-        </>
-      );
+      // router.replace("/login");
     } else {
-      await appwriteServices.addToCart({
+      // check if product already in the cart. If in cart, increase quantity
+      const productInCart = await appwriteServices.isProductInCart({
+        productId: product._id,
         userId: user?.$id,
-        imageURL: product?.image.asset._ref,
-        productName: product?.name,
-        minPrice: product?.minPrice,
-        maxPrice: product?.maxPrice,
-        stylist: product?.stylist,
-        productId: product?._id,
-        quantity: 1,
       });
+
+      if (productInCart) {
+        return (
+          <>
+            <Message text="Sorry, item is already in the cart" redirectRoute="/products" />
+          </>
+        );
+      } else {
+        await appwriteServices.addToCart({
+          userId: user?.$id,
+          imageURL: product?.image.asset._ref,
+          productName: product?.name,
+          minPrice: product?.minPrice,
+          maxPrice: product?.maxPrice,
+          stylist: product?.stylist,
+          productId: product?._id,
+          quantity: 1,
+        });
+      }
+      // if (typeof window !== "undefined") {
+      //   window.location.reload();
+      // }
+      // router.push("/cart");
     }
-    // if (typeof window !== "undefined") {
-    //   window.location.reload();
-    // }
-    router.push("/cart");
   };
 
   return (

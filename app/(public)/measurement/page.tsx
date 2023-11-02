@@ -2,7 +2,7 @@
 import Checkout from "@/components/Checkout";
 import Measurements from "@/components/Measurment";
 import MeasurmentImages from "@/components/MeasurmentImages";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import Lottie from "lottie-react";
 import lottieLoad from "../../../public/lottieLoad.json";
 import { useSelector } from "react-redux";
@@ -19,11 +19,11 @@ interface Props {
   product: Product;
 }
 const measurement = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { checkoutDetails } = useSelector((store: any) => store.shop);
 
   if (!checkoutDetails || Object.keys(checkoutDetails).length === 0) {
-    router.replace("/products");
+    // router.replace("/products");
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center">

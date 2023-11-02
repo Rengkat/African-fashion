@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Checkout from "./Checkout";
 import { usePaystackPayment } from "react-paystack";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 interface Product {
   _id: string;
   name: string;
@@ -34,7 +34,7 @@ interface Reference {
 }
 const Measurements = () => {
   const { user, checkoutDetails } = useSelector((store: any) => store.shop);
-  const router = useRouter();
+  // const router = useRouter();
   const [bustOrChest, setBustOrChest] = useState("");
   const [waist, setWaist] = useState("");
   const [hips, setHips] = useState("");
@@ -161,13 +161,13 @@ const Measurements = () => {
     // Implementation for whatever you want to do with reference and after success call.
 
     createOrder();
-    router.replace("/account/orders");
+    // router.replace("/account/orders");
   };
 
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    router.replace("/products");
+    // router.replace("/products");
   };
   const initializePayment = usePaystackPayment(config);
   const resetAllField = () => {

@@ -1,7 +1,7 @@
 "use client";
 import appwriteServices from "@/lib/appwrite";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { getCheckoutDetails } from "@/redux/features/shopSlice";
 
 type Product = {
@@ -27,17 +27,17 @@ interface Cart {
   quantity: number;
 }
 export default function BuyButton({ product }: Props) {
-  const router = useRouter();
+  // const router = useRouter();
   const dispatch = useDispatch();
 
   const { user, authStatus } = useSelector((store: any) => store.shop);
 
   const handleAddToCart = () => {
     if (!authStatus) {
-      router.replace("/login");
+      // router.replace("/login");
     }
     dispatch(getCheckoutDetails(product));
-    router.push("/measurement");
+    // router.push("/measurement");
   };
 
   return (

@@ -4,10 +4,10 @@ import Link from "next/link";
 import appwriteServices from "@/lib/appwrite";
 import { getAuthStatus } from "@/redux/features/shopSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 const Register = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
+  // const router = useRouter();
 
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
@@ -29,7 +29,7 @@ const Register = () => {
 
       if (user) {
         dispatch(getAuthStatus(false));
-        router.push("/login");
+        // router.push("/login");
       }
     } catch (error: any) {
       setErr(error.message);

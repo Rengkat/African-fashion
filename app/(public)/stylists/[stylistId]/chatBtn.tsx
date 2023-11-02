@@ -1,6 +1,6 @@
 "use client";
 import { IoLogoWechat } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import appwriteServices from "@/lib/appwrite";
 import { onChangeUserChat } from "@/redux/features/shopSlice";
@@ -8,7 +8,7 @@ import { onChangeUserChat } from "@/redux/features/shopSlice";
 const ChatBtn = ({ stylist }: any) => {
   const { user } = useSelector((store: any) => store.shop);
   const dispatch = useDispatch();
-  const router = useRouter();
+  // const router = useRouter();
 
   const combinedId = user?.$id > stylist?.$id ? user?.$id + stylist?.$id : stylist?.$id + user?.$id;
   const activeChatData = {
@@ -48,9 +48,9 @@ const ChatBtn = ({ stylist }: any) => {
           receiverId: stylist?.$id,
           receiverName: stylist?.company || `${stylist.firstName} ${stylist?.surname}`,
         });
-        router.push("/chats");
+        // router.push("/chats");
       } else {
-        router.push("/chats");
+        // router.push("/chats");
       }
     } catch (error) {}
   };

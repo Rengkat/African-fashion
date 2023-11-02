@@ -1,5 +1,5 @@
 "use client";
-
+// import { useRouter } from "next/navigation";
 import appwriteServices from "@/lib/appwrite";
 import { useSelector } from "react-redux";
 
@@ -27,26 +27,30 @@ interface Cart {
 }
 const WishlistBtn = ({ product }: Props) => {
   const { user, authStatus } = useSelector((store: any) => store.shop);
-
+  // const router = useRouter();
   const handleAddWishlist = async () => {
-    try {
-      const existProduct = await appwriteServices.isProductInCart({
-        productId: product?._id,
-        userId: user?.$id,
-      });
-      if (existProduct) {
-      }
-      await appwriteServices.createWishlist({
-        userId: user.$id,
-        productName: product?.name,
-        maxPrice: product?.maxPrice,
-        minPrice: product?.minPrice,
-        imageURL: product?.image?.asset._ref,
-        stylist: product?.stylist,
-        productId: product?._id,
-        uniqueId: "",
-      });
-    } catch (error) {}
+    if (!authStatus) {
+      // router.replace("/login");
+    } else {
+      try {
+        const existProduct = await appwriteServices.isProductInCart({
+          productId: product?._id,
+          userId: user?.$id,
+        });
+        if (existProduct) {
+        }
+        await appwriteServices.createWishlist({
+          userId: user.$id,
+          productName: product?.name,
+          maxPrice: product?.maxPrice,
+          minPrice: product?.minPrice,
+          imageURL: product?.image?.asset._ref,
+          stylist: product?.stylist,
+          productId: product?._id,
+          uniqueId: "",
+        });
+      } catch (error) {}
+    }
   };
   return (
     <button onClick={handleAddWishlist} className="w-full border-2 border-[#000] py-2 px-3 my-2">
