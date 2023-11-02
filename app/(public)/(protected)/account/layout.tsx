@@ -9,7 +9,7 @@ import AccNavLink from "./nav-link";
 import { useDispatch, useSelector } from "react-redux";
 import { openMobileProfile } from "@/redux/features/shopSlice";
 import appwriteServices, { db } from "@/lib/appwrite";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import lottieLoad from "../../../../public/lottieLoad.json";
 
 import { databaseId, userCollectionId } from "@/lib/config";
@@ -20,18 +20,15 @@ interface Props {
 }
 export default function AccountLayout({ children }: Props) {
   const { isMobileProfileOpen, authStatus, user } = useSelector((store: any) => store.shop);
-  // const router = useRouter();
+  const router = useRouter();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const user = async () => {};
-    user();
-  }, []);
+
   const handleLogout = () => {
     appwriteServices.logOut();
     window.location.reload();
   };
   if (user?.company) {
-    // router.replace("/stylist-account");
+    router.replace("/stylist-account");
     <>
       <div className="w-full h-screen flex justify-center items-center">
         <Lottie className="w-[10rem] h-[10rem]" animationData={lottieLoad} loop={true} />
