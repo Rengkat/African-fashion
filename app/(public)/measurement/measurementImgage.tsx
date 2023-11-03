@@ -1,4 +1,3 @@
-"use client";
 import Img from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import { sanityClient } from "@/lib/config";
