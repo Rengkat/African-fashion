@@ -2,13 +2,13 @@ import React from "react";
 import SubHero from "./SubHero";
 import Image from "next/image";
 import Slider from "./Slider";
+import { HeroSkeleton } from "./Skeleton";
 
 const Hero = () => {
   return (
     <div className=" xl:h-[90vh] flex flex-col gap-2 sm:grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-y-5 sm:gap-4 mt-4">
-      <div className="hero-slider h-[70vh] xl:h-auto col-span-2 row-span-2 relative">
-        <Slider />
-      </div>
+      <Slider />
+
       <div className="bg-green-300 h-[40vh] xl:h-[45vh] relative overflow-hidden">
         <SubHero
           heading="Men's Native"

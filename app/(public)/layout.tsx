@@ -1,11 +1,10 @@
 import "../globals.css";
-// import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import dynamic from "next/dynamic";
+import NavBar from "@/components/NavBar";
 interface Props {
   children: React.ReactNode;
 }
-const NavBarComp = dynamic(() => import("../../components/NavBar"), { ssr: false });
 const MobileNav = dynamic(() => import("../../components/MobileNav"), { ssr: false });
 export const metadata = {
   title: "Classic Fashion - Home",
@@ -16,7 +15,7 @@ export default function PublicLayout({ children }: Props) {
     <>
       <div className="w-full relative">
         <div className="sticky top-0 left-0 right-0 z-20 bg-[#fffffff2]">
-          <NavBarComp />
+          <NavBar />
         </div>
         {children}
         <Footer />
