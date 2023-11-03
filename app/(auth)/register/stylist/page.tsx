@@ -3,7 +3,7 @@ import appwriteServices from "@/lib/appwrite";
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 const register = () => {
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
@@ -11,7 +11,7 @@ const register = () => {
   const [company, setCompany] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  // const router = useRouter();
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (firstName === "" || surname === "" || email === "" || phone === "" || password === "") {
@@ -29,7 +29,7 @@ const register = () => {
         phone,
       });
       if (user) {
-        // router.push("/login");
+        router.push("/login");
       }
     } catch (error) {
       console.error("Error during request:", error);
