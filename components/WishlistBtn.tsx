@@ -1,5 +1,5 @@
 "use client";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import appwriteServices from "@/lib/appwrite";
 import { useSelector } from "react-redux";
 
@@ -27,10 +27,10 @@ interface Cart {
 }
 const WishlistBtn = ({ product }: Props) => {
   const { user, authStatus } = useSelector((store: any) => store.shop);
-  // const router = useRouter();
+  const router = useRouter();
   const handleAddWishlist = async () => {
     if (!authStatus) {
-      // router.replace("/login");
+      router.replace("/login");
     } else {
       try {
         const existProduct = await appwriteServices.isProductInCart({
@@ -49,6 +49,9 @@ const WishlistBtn = ({ product }: Props) => {
           productId: product?._id,
           uniqueId: "",
         });
+        if (typeof window !== "undefined") {
+          window.location.reload();
+        }
       } catch (error) {}
     }
   };
