@@ -4,23 +4,16 @@ import Link from "next/link";
 import React, { FormEvent, ReactElement, useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { getAuthStatus } from "@/redux/features/shopSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthStatus, addAuthenticatedUser } from "@/redux/features/shopSlice";
 import appwriteServices, { db } from "@/lib/appwrite";
 
 const Login = () => {
   const [err, setErr] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginSuccessful, setLoginSuccessful] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (loginSuccessful) {
-      router.push("/account"); // Redirect when loginSuccessful is true
-    }
-  }, [loginSuccessful]);
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,13 +22,13 @@ const Login = () => {
       const session = await appwriteServices.loginUser({ email, password });
       if (session) {
         dispatch(getAuthStatus(true));
-        setLoginSuccessful(true); // Set loginSuccessful to true upon successful login
+        // console.log(session);
+        router.push("/account");
       }
     } catch (error: any) {
       setErr(error.message);
     }
   };
-
   return (
     <div className="mt-[5px] mb-[1rem]">
       <Image
