@@ -36,12 +36,12 @@ const NavBar = () => {
             <div className="border-[1px] border-slate-500 flex justify-between items-center w-[80%] rounded-lg ">
               <input
                 type="text"
-                className="w-[80%] bg-transparent p-[3px] md:p-[5px] md:m-1 placeholder:text-sm border-none outline-none"
+                className="w-[80%] bg-transparent p-[2px] md:p-[5px] md:m-[1px] placeholder:text-sm border-none outline-none"
                 placeholder="Search a product"
               />
               <BsSearch
                 fontSize={30}
-                className=" w-[calc(100%-80%)] border-l-[1px] border-slate-500 text-slate-500"
+                className=" w-[calc(100%-80%)] border-l-[0.5px] border-slate-500 text-slate-500"
               />
             </div>
             <div>

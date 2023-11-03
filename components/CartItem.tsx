@@ -3,6 +3,7 @@ import React from "react";
 import CartImage from "./CartImage";
 import appwriteServices from "@/lib/appwrite";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 interface Cart {
   userId: string;
@@ -20,12 +21,16 @@ interface Props {
 }
 const CartItem = ({ product }: Props) => {
   const { user } = useSelector((store: any) => store.shop);
+  const [err, setErro] = useState("");
 
   const handleRemove = async () => {
     try {
       await appwriteServices.removeProduct(product?.$id);
+      if (typeof window !== "undefined") {
+        window.location.reload();
+      }
     } catch (error) {}
-    // console.log("first");
+    setErro("Sorry an error occurred");
   };
   const hanleMoveToWishlist = async () => {
     await appwriteServices.removeProduct(product?.$id);
@@ -39,6 +44,9 @@ const CartItem = ({ product }: Props) => {
       productId: product?.productId,
       uniqueId: product?.$id,
     });
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   };
 
   return (

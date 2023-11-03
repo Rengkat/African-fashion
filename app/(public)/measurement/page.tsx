@@ -1,4 +1,5 @@
 "use client";
+import React, { useEffect } from "react";
 import Checkout from "@/components/Checkout";
 import Measurements from "@/components/Measurment";
 import MeasurmentImages from "@/components/MeasurmentImages";
@@ -7,6 +8,7 @@ import Lottie from "lottie-react";
 import lottieLoad from "../../../public/lottieLoad.json";
 import { useSelector } from "react-redux";
 import ShowCase from "./showCase";
+
 interface Product {
   _id: string;
   name: string;
@@ -15,15 +17,22 @@ interface Product {
   maxPrice: number;
   minPrice: number;
 }
+
 interface Props {
   product: Product;
 }
-const measurement = () => {
+
+const Measurement = () => {
   const router = useRouter();
   const { checkoutDetails } = useSelector((store: any) => store.shop);
 
+  useEffect(() => {
+    if (!checkoutDetails || Object.keys(checkoutDetails).length === 0) {
+      router.replace("/products");
+    }
+  }, [checkoutDetails, router]);
+
   if (!checkoutDetails || Object.keys(checkoutDetails).length === 0) {
-    router.replace("/products");
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center">
@@ -42,7 +51,7 @@ const measurement = () => {
       <div className="w-[95%] md:w-[90%]  lg:w-[80%] mx-auto my-10">
         <p className="text-xl lg:text-2xl my-4 p-2 text-center">
           <span className="text-red-700">Note!</span> Use the charts below. To submit your body
-          measurement. All measurement are in UK
+          measurement. All measurements are in the UK.
         </p>
         <div className="flex flex-col-reverse lg:flex-row gap-6">
           <aside className="w-full lg:w-1/2 border-2">
@@ -57,4 +66,4 @@ const measurement = () => {
   );
 };
 
-export default measurement;
+export default Measurement;

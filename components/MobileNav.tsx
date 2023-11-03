@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { GrClose } from "react-icons/gr";
 import { BsSearch, BsCart4 } from "react-icons/bs";
+import { FaUserAlt } from "react-icons/fa";
 import { IoLogoWechat } from "react-icons/io5";
 import { HiMenu } from "react-icons/hi";
 import Link from "next/link";
@@ -36,13 +37,7 @@ const MobileNav = () => {
             </header>
             <div className="flex items-center gap-3 md:gap-5">
               <Link href={"/account"}>
-                <Image
-                  src="/account 2.svg"
-                  width={50}
-                  height={50}
-                  alt="account"
-                  className="h-[2rem] w-[4rem] sm:w-[2rem]"
-                />
+                <FaUserAlt className="text-blue-400 text-xl" />
               </Link>
               <Link href={"/chats"} className="relative">
                 <IoLogoWechat className="text-blue-400 text-3xl" />
