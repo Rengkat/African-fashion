@@ -18,12 +18,14 @@ const Profile = () => {
   useEffect(() => {
     // Wrap the router.refresh() call in a useEffect
     if (authStatus) {
-      router.refresh(); // Refresh client-side
     }
   }, [authStatus]);
-  useEffect(() => {});
+
   const hanleLogOut = () => {
     appwriteServices.logOut();
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   };
   useEffect(() => {
     const getUserDetail = async () => {

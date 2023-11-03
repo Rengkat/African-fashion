@@ -22,6 +22,7 @@ const Login = () => {
       const session = await appwriteServices.loginUser({ email, password });
       if (session) {
         dispatch(getAuthStatus(true));
+
         // console.log(session);
         router.push("/account");
       }
