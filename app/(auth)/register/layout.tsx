@@ -1,18 +1,22 @@
 "use client";
-import React from "react";
+import { useEffect } from "react";
 import NavLink from "./links";
 import { useSelector } from "react-redux";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Lottie from "lottie-react";
 import lottieLoad from "../../../public/lottieLoad.json";
 interface Props {
   children: React.ReactNode;
 }
 export default function RegisterLayout({ children }: Props) {
-  // const router = useRouter();
+  const router = useRouter();
   const { authStatus } = useSelector((store: any) => store.shop);
+  useEffect(() => {
+    if (authStatus) {
+      router.replace("/");
+    }
+  }, [authStatus, router]);
   if (authStatus) {
-    // router.replace("/");
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center">
