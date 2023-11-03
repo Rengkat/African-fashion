@@ -59,10 +59,10 @@ export default function AddCartButton({ product }: Props) {
           quantity: 1,
         });
       }
+      // router.push("/cart");
       if (typeof window !== "undefined") {
         window.location.reload();
       }
-      router.push("/cart");
     }
   };
 
