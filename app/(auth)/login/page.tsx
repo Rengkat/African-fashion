@@ -1,15 +1,23 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import Login from "@/components/Login";
 import Lottie from "lottie-react";
 import lottieLoad from "../../../public/lottieLoad.json";
+import { useEffect } from "react"; // Import useEffect
+
 const LoginPage = () => {
   const { authStatus } = useSelector((store: any) => store.shop);
   const router = useRouter();
-  if (!authStatus) {
-    router.replace("/");
+
+  useEffect(() => {
+    // Move the routing logic inside the useEffect
+    if (authStatus) {
+      router.replace("/");
+    }
+  }, [authStatus]);
+
+  if (authStatus) {
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center">
@@ -18,6 +26,7 @@ const LoginPage = () => {
       </>
     );
   }
+
   return (
     <>
       <Login />

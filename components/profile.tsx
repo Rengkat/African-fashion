@@ -15,9 +15,15 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { isProfileOpen, authStatus, user } = useSelector((store: any) => store.shop);
   const [userDetail, setUserUserDetail] = useState<any>(null);
+  useEffect(() => {
+    // Wrap the router.refresh() call in a useEffect
+    if (authStatus) {
+      router.refresh(); // Refresh client-side
+    }
+  }, [authStatus]);
+  useEffect(() => {});
   const hanleLogOut = () => {
     appwriteServices.logOut();
-    router.refresh();
   };
   useEffect(() => {
     const getUserDetail = async () => {
