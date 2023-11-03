@@ -12,14 +12,12 @@ import appwriteServices, { db } from "@/lib/appwrite";
 import { useRouter } from "next/navigation";
 import lottieLoad from "../../../../public/lottieLoad.json";
 
-import { databaseId, userCollectionId } from "@/lib/config";
 import Lottie from "lottie-react";
-// import appwriteServices, { databaseId, db, userCollectionId } from "@/lib/appwrite";
 interface Props {
   children: React.ReactNode;
 }
 export default function AccountLayout({ children }: Props) {
-  const { isMobileProfileOpen, authStatus, user } = useSelector((store: any) => store.shop);
+  const { isMobileProfileOpen, user } = useSelector((store: any) => store.shop);
   const router = useRouter();
   const dispatch = useDispatch();
 
