@@ -24,7 +24,7 @@ export function NaveBarSkeleton() {
 export function HeroSkeleton() {
   return (
     <>
-      <div className="">
+      <div>
         <Skeleton variant="rounded" sx={{ width: "100%", height: "90vh" }} />
       </div>
     </>

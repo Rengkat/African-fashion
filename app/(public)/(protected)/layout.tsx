@@ -1,7 +1,7 @@
 "use client";
 import Lottie from "lottie-react";
 import lottieLoad from "../../../public/lottieLoad.json";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
 interface Props {
@@ -9,9 +9,9 @@ interface Props {
 }
 export default function ProtectedRoutes({ children }: Props) {
   const { authStatus } = useSelector((store: any) => store.shop);
-  // const router = useRouter();
+  const router = useRouter();
   if (!authStatus) {
-    // router.replace("/login");
+    router.replace("/login");
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center">
