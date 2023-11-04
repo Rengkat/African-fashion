@@ -3,9 +3,10 @@ import Image from "next/image";
 import { BsSendFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import appwriteServices from "@/lib/appwrite";
+import appwriteServices, { appwriteClient } from "@/lib/appwrite";
 import { Fragment } from "react";
 import Message from "@/app/(public)/(protected)/chats/Message";
+import { chatsCollectionId, databaseId } from "@/lib/config";
 interface UserChats {
   $createdAt: string;
   $id: string;
@@ -33,6 +34,7 @@ const ChartFiled = () => {
   const [message, setMessage] = useState<any>("");
   const [conversations, setConversations] = useState<any>([]);
   const [activeUser, setActiveUser] = useState<any>(null);
+  const [recentMessage, setRecentMessage] = useState("");
   const { user, userChartWith } = useSelector((store: any) => store.shop);
 
   const combinedId =
@@ -41,12 +43,16 @@ const ChartFiled = () => {
       : userChartWith?.userId + user?.$id;
 
   const handleSubmit = async () => {
-    await appwriteServices.createChats({
-      combinedId,
-      message,
-      userId: user?.$id,
-      userName: user?.company || `${user?.firstName} ${user?.surname}`,
-    });
+    if (message !== "") {
+      await appwriteServices.createChats({
+        combinedId,
+        message,
+        userId: user?.$id,
+        userName: user?.company || `${user?.firstName} ${user?.surname}`,
+      });
+    } else {
+      return;
+    }
     setMessage("");
   };
   useEffect(() => {
@@ -56,12 +62,27 @@ const ChartFiled = () => {
     };
     getActiveChat();
   }, [combinedId]);
+  // conversation
+
+  const getConversation = async () => {
+    const data = await appwriteServices.getChats(combinedId);
+    setConversations(data);
+  };
+
   useEffect(() => {
-    const getConversation = async () => {
-      const data = await appwriteServices.getChats(combinedId);
-      setConversations(data);
-    };
     getConversation();
+    // const unsubscribe = appwriteClient.subscribe(
+    //   `databases.${databaseId}.collections.${chatsCollectionId}.documents`,
+    //   (response) => {
+    //     if (response.events.includes("databases.*.collections.*.documents.*.create")) {
+    //       // console.log(response);
+    //       setRecentMessage(response?.payload?.message);
+    //     }
+    //   }
+    // );
+    // return () => {
+    //   unsubscribe();
+    // };
   }, [message, userChartWith]);
   return (
     <div className="relative h-full">
@@ -78,30 +99,32 @@ const ChartFiled = () => {
           </>
         )}
         <div className="flex flex-col justify-between">
-          <p className="text-[17px] font-semibold">
+          <p className="text-[12px] font-semibold">
             {userChartWith?.userName || activeUser?.userName || "tab on user to start conversation"}
           </p>
           <div className="flex items-center gap-[5px]">
             {userChartWith && (
               <>
-                <div className="bg-green-500 w-[7px] h-[7px] rounded-full shadow mt-1"></div>
-                <p className="text-[#999]">online</p>
+                {/* <div className="bg-green-500 w-[7px] h-[7px] rounded-full shadow mt-1"></div> */}
+                {/* <p className="text-[#999]">online</p> */}
               </>
             )}
           </div>
         </div>
       </div>
 
-      <div className="">
-        {conversations?.map((message: Conversation) => {
-          return (
-            <Fragment key={message?.$id}>
-              <Message conversation={message} user={user} />
-            </Fragment>
-          );
-        })}
+      <div className="h-[40vh] md:h-[60vh] overflow-y-scroll">
+        <div className="">
+          {conversations?.map((message: Conversation) => {
+            return (
+              <Fragment key={message?.$id}>
+                <Message conversation={message} user={user} />
+              </Fragment>
+            );
+          })}
+        </div>
       </div>
-      <div className="w-[90%] absolute bottom-5 left-0 right-0 mx-auto flex border-[1px] bg-[#c1bfbf] border-[#999] rounded-r-md">
+      <div className="w-[90%] mx-auto flex border-[1px] bg-[#c1bfbf] border-[#999] rounded-r-md">
         <aside
           className="w-[5rem] flex items-center justify-center cursor-pointer"
           onClick={handleSubmit}>

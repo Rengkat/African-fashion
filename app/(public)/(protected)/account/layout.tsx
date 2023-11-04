@@ -20,7 +20,7 @@ export default function AccountLayout({ children }: Props) {
   const { isMobileProfileOpen, user } = useSelector((store: any) => store.shop);
   const router = useRouter();
   const dispatch = useDispatch();
-
+  console.log(user);
   const handleLogout = () => {
     appwriteServices.logOut();
     window.location.reload();

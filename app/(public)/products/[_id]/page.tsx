@@ -23,7 +23,7 @@ const product = async ({ params }: Props) => {
           <p className="font-semibold py-3">
             ₦{product?.minPrice} - ₦{product?.maxPrice}
           </p>
-          <Link href={""} className=" uppercase">
+          <Link href={"/stylists"} className=" uppercase">
             {product?.stylist}
           </Link>
           <p className=" py-3">Slug: {product?.slug?.current}</p>

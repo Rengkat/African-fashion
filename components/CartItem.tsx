@@ -4,6 +4,7 @@ import CartImage from "./CartImage";
 import appwriteServices from "@/lib/appwrite";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import Link from "next/link";
 
 interface Cart {
   userId: string;
@@ -62,9 +63,11 @@ const CartItem = ({ product }: Props) => {
               <h3 className="text-xs lg:text-xl font-normal lg:font-light">
                 {product?.productName}
               </h3>
-              <p className="text-blue-400 text-xs lg:text-sm my-3 hidden lg:block uppercase">
+              <Link
+                href={"/stylists"}
+                className="text-blue-400 text-xs lg:text-sm my-3 hidden lg:block uppercase">
                 {product?.stylist}
-              </p>
+              </Link>
             </div>
 
             <div className="w-[20%] text-center text-xs lg:text-normal ml-2">

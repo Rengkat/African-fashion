@@ -41,7 +41,6 @@ const shopSlice = createSlice({
       state.isMobileProfileOpen = !state.isMobileProfileOpen;
     },
     onChangeUserChat(state, action) {
-      console.log(state.userChartWith);
       state.userChartWith = action.payload;
     },
   },
