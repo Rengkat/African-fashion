@@ -36,7 +36,7 @@ const Edit = () => {
       userDetail.city === "" ||
       userDetail.deliveryAddress === ""
     ) {
-      console.log("ENTER DETAILS");
+      // console.log("ENTER DETAILS");
     } else {
       await appwriteServices.updateUserCollection({
         phone: userDetail.phone,
